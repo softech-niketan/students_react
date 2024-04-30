@@ -7,40 +7,7 @@ import { Link } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function DeleteButton({ recordId, onDelete }) {
-  const handleDelete = async () => {
-    try {
-    
-      // Make DELETE request to delete the record with recordId
-      await axios.delete(
-        `http://localhost:8080/api/v1/student/delete/${recordId}`
-      );
-      // If deletion is successful, trigger the onDelete callback
-      onDelete(recordId);
-       window.location.reload();
-    } catch (error) {
-      console.error("Failed to delete record:", error);
-    }
-  };
-
-
-  return <button type="button" onClick={handleDelete} class="btn btn-danger">Delete</button>;
-}
-
-function RegisterStudent() {
-  const [user, setUser] = useState([]);
-
-
-
-
-
-
-
-  const handleDelete = (deletedRecordId) => {
-    // Filter out the deleted record from the records array
-    const updatedRecords = user.filter((user) => user.id !== deletedRecordId);
-    setUser(updatedRecords);
-  };
+function Attendance() {
   // const [data, setData] = useState({
   //   image: "",
 
@@ -81,7 +48,7 @@ function RegisterStudent() {
       try {
         // Make a GET request to the API endpoint
         const response = await axios.get(
-          "http://localhost:8080/api/v1/student/register_student_getall"
+          "http://localhost:8080/api/v1/student/getbatches"
         );
         if (response.data && response.data.data) {
           setData(response.data.data);
@@ -138,7 +105,7 @@ function RegisterStudent() {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark"> Register Students Info </h1>
+                <h1 class="m-0 text-dark">Batches </h1>
               </div>
 
               <div class="col-sm-6">
@@ -287,12 +254,15 @@ function RegisterStudent() {
                       <thead>
                         <tr>
                           <th>Sr No</th>
-                          <th>Students Name</th>
-                          <th>Email</th>
-                          <th>Password</th>
-                          <th>Class</th>
+                          <th>Batch Name</th>
+
+                          <th>Description</th>
+                          <th>start Time</th>
+                          <th>End Time</th>
+                          <th>Batch Type</th>
+                          <th>Trainer Name</th>
+                          <th>Status</th>
                           <th>Date</th>
-                          <th>In Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -304,16 +274,20 @@ function RegisterStudent() {
                             return (
                               <tr key={index}>
                                 <td>{user.id}</td>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.password}</td>
-                                <td>{user.class_name}</td>
-                                <td>{user.date}</td>
-                                <td>{user.in_time}</td>
-                                <td>
-                                <DeleteButton recordId={user.id} onDelete={handleDelete} />
+                                <td>{user.batch_name}</td>
 
-                                </td>
+                                <td>{user.description}</td>
+                                <td>{user.start_time}</td>
+                                <td>{user.end_time}</td>
+                                <td>{user.batch_type}</td>
+
+                                <td>{user.trainer_name}</td>
+                                <td>{user.batch_status}</td>
+                                <td>{user.date}</td>
+                                <td><button type="button" class="btn btn-primary" >
+                                
+                                            </button></td>
+                                {/* <td>{user.webcam}</td> */}
                               </tr>
                             );
                           })}
@@ -437,4 +411,4 @@ function RegisterStudent() {
   );
 }
 
-export default RegisterStudent;
+export default Attendance;
