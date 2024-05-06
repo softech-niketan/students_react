@@ -261,6 +261,7 @@ function Attendance() {
                           <th>Email</th>
                           <th>Date</th>
                           <th>Role</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
 
@@ -279,8 +280,20 @@ function Attendance() {
                                 <td>{user.date}</td>
 
                                 <td>{user.user_role}</td>
+                                {/* <td><button type="button" class="btn btn-primary" >
+                                         Edit
+                                            </button></td> */}
+                                <td>
+                                  <Link
+                                    class="btn btn-primary"
+                                    to={`/updateusers/${user.id}`}
+                                  >
+                                    {" "}
+                                    Edit
+                                  </Link>
+                                </td>
+
                                 {/* <td>{user.webcam}</td> */}
-                               
                               </tr>
                             );
                           })}

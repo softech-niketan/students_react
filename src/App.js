@@ -27,6 +27,8 @@ import AddAssignment from "./Components/AddAssignment.js";
 import ViewAssignment from "./Components/ViewAssignment.js";
 import AddStudentsAssign from "./Components/AddStudentsAssign.js";
 import ViewStudentAssign from "./Components/ViewStudentAssign.js";
+import Updateusers from "./Components/Updateusers.js";
+import ViewMyAssignment from "./Components/ViewMyAssignment.js";
 
 // import React, { useState } from 'react';
 
@@ -57,18 +59,24 @@ function App() {
             <Route path="/attendance" element={<Attendance />}></Route>
             <Route path="/addAttendance" element={<AddAttendance />}></Route>
             <Route path="/addusers" element={<Addusers />}></Route>
+            <Route path="/updateusers/:id" element={<Updateusers />}></Route>
             <Route path="/viewusers" element={<Viewusers />}></Route>
             <Route path="/addbatches" element={<Addbatches />}></Route>
             <Route path="/View_batches" element={<Viewbatches />}></Route>
             <Route path="/addassignment" element={<AddAssignment />}></Route>
             <Route path="/viewassignment" element={<ViewAssignment />}></Route>
             <Route
+              path="/ViewMyAssignment"
+              element={<ViewMyAssignment />}
+            ></Route>
+
+            <Route
               path="/ViewStudentAssign"
               element={<ViewStudentAssign />}
             ></Route>
 
             <Route
-              path="/addStudentsAssignment"
+              path="/addStudentsAssignment/:id"
               element={<AddStudentsAssign />}
             ></Route>
 

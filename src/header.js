@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./header.css";
 import { Link } from "react-router-dom";
-export default function header(props) {
+import Login from "./Login";
+
+export default function header() {
+  // const [user, setUser] = useState(null);
+
+  //var storedEmail = localStorage.getItem("user_data");
+  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
+  console.log(retrievedArray.user_role);
+  console.log("storedEmail", retrievedArray.email);
+  // const [user, setUser] = useState(null);
+
+  // if (retrievedArray.user_rol === "student") {
+  //   // If the user is inactive, hide the tab
+  //   const roleIsActive = true;
+  // }
+
   return (
     <>
       {/* <!-- Navbar --> */}
@@ -46,7 +61,12 @@ export default function header(props) {
 
               <li class="nav-item">
                 <a href="" class="nav-link text-white">
-                  Name : {props.firstName}
+                  Name : {retrievedArray.user_name}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link text-white">
+                  Role : {retrievedArray.user_role}
                 </a>
               </li>
 
@@ -67,32 +87,50 @@ export default function header(props) {
                   <p>Attendance</p>
                 </Link>
               </li>
-              <li class="nav-item">
-                <Link to="/addusers" class="nav-link">
-                  <p>Users</p>
-                </Link>
-              </li>
 
-              <li class="nav-item">
-                <Link to="/addbatches" class="nav-link">
-                  <p>Batches</p>
-                </Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/addassignment" class="nav-link">
-                  <p>Assignment</p>
-                </Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/addStudentsAssignment" class="nav-link">
-                  <p>Students Assignment</p>
-                </Link>
-              </li>
-              <li class="nav-item">
+              {retrievedArray.user_role === "admin" && (
+                <li id="user" class="nav-item">
+                  <Link to="/addusers" class="nav-link">
+                    <p>Users</p>
+                  </Link>
+                </li>
+              )}
+              {(retrievedArray.user_role === "admin" ||
+                retrievedArray.user_role === "trainer") && (
+                <li class="nav-item">
+                  <Link to="/addbatches" class="nav-link">
+                    <p>Batches</p>
+                  </Link>
+                </li>
+              )}
+              {(retrievedArray.user_role === "admin" ||
+                retrievedArray.user_role === "trainer") && (
+                <li class="nav-item">
+                  <Link to="/addassignment" class="nav-link">
+                    <p>Assignment</p>
+                  </Link>
+                </li>
+              )}
+              {retrievedArray.user_role === "student" && (
+                <li class="nav-item">
+                  <Link to="/ViewMyAssignment" class="nav-link">
+                    <p>My Assignment</p>
+                  </Link>
+                </li>
+              )}
+              {(retrievedArray.user_role === "admin" ||
+                retrievedArray.user_role === "trainer") && (
+                <li class="nav-item">
+                  <Link to="/ViewStudentAssign" class="nav-link">
+                    <p>Student Submissions</p>
+                  </Link>
+                </li>
+              )}
+              {/* <li class="nav-item">
                 <Link to="/registerstudent" class="nav-link">
                   <p>Register Student</p>
                 </Link>
-              </li>
+              </li> */}
               <li class="nav-item">
                 <Link to="/" class="nav-link">
                   <p>Log out</p>

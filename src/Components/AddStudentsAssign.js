@@ -1,11 +1,13 @@
 // import React from 'react'
 import React, { useRef, useState, useEffect } from "react";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
 function AddStudentsAssign({ streamId }) {
+  const { id } = useParams();
+  console.log("idddd", id);
   const navigate = useNavigate();
 
   const currentTime = moment().format("HH:mm:ss");
@@ -14,6 +16,8 @@ function AddStudentsAssign({ streamId }) {
 
   const [selectedOption, setSelectedOption] = useState("");
   const [assign_name, setassign_name] = useState([]);
+  const [assignment, setassignment] = useState([]);
+  console.log("asssinnnn123", assignment);
 
   const [options, setOptions] = useState([]);
   // console.log("optionsssss", options);
@@ -21,7 +25,7 @@ function AddStudentsAssign({ streamId }) {
   const handleStatusChange = (event) => {
     // console.log("batch_type", event);
     const value = event.target.value;
-    console.log("batch_type", value);
+    //console.log("batch_type", value);
     setFormData({
       ...formData, // Spread the existing formData
       batch_type: value, // Update status with the new value
@@ -30,7 +34,7 @@ function AddStudentsAssign({ streamId }) {
   const handleSelectChange = (event) => {
     //console.log(event);
     const batch_status = event.target.value;
-    console.log("batch_status", batch_status);
+    //console.log("batch_status", batch_status);
     setFormData({
       ...formData, // Spread the existing formData
 
@@ -41,7 +45,7 @@ function AddStudentsAssign({ streamId }) {
   const handleSelectChangeassignment = (event) => {
     //console.log("trainer", event);
     const assignment_name = event.target.value;
-    console.log("assign_name", assignment_name);
+    //console.log("assign_name", assignment_name);
 
     setFormData({
       ...formData, // Spread the existing formData
@@ -63,7 +67,7 @@ function AddStudentsAssign({ streamId }) {
   const handleSelectChangeTrainer = (event) => {
     //console.log("trainer", event);
     const trainer_name = event.target.value;
-    console.log("trainer", trainer_name);
+    // console.log("trainer", trainer_name);
 
     setFormData({
       ...formData, // Spread the existing formData
@@ -71,21 +75,34 @@ function AddStudentsAssign({ streamId }) {
       trainer_name: trainer_name, // Update user_role with the new value
     });
   };
+  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response2 = await axios.get(
-          "http://localhost:8080/api/v1/student/getassignment"
+        const response3 = await axios.get(
+          `http://localhost:8080/api/v1/student/getmyassignment/${id}`,
+          {
+            params: {
+              id: id, // Assuming 'email' is the parameter you want to send
+            },
+          }
         );
-        if (response2.data && response2.data.data) {
-          setassign_name(response2.data.data);
-          //console.log("responce", response2.data.data);
+        if (response3.data && response3.data.data) {
+          setassignment(response3.data.data);
         }
-        const trainerData123 = response2.data.data.filter(
-          (user) => user.assignment_name
-        );
-        // console.log("asssinnnn123", trainerData123);
-        setassign_name(trainerData123);
+
+        // console.log("mm123", response3.data.data);
+        const record_data = response3.data.data[0];
+        console.log("record_data", record_data);
+        setFormData({
+          ...formData,
+          // id: record_data.id,
+          assignment_name: record_data.assignment_name,
+          batch_name: record_data.batch_name,
+          trainer_name: record_data.trainer_name,
+        });
+
         //  setOptions(response1.data.data); // Assuming the response is an array of objects
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -94,29 +111,53 @@ function AddStudentsAssign({ streamId }) {
 
     fetchData();
   }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response1 = await axios.get(
-          "http://localhost:8080/api/v1/student/getusers"
-        );
-        if (response1.data && response1.data.data) {
-          setOptions(response1.data.data);
-          // console.log(response1.data.data);
-        }
-        const trainerData = response1.data.data.filter(
-          (user) => user.user_role === "trainer"
-        );
-        setOptions(trainerData);
-        // console.log("trainerData",trainerData)
-        //  setOptions(response1.data.data); // Assuming the response is an array of objects
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response2 = await axios.get(
+  //         "http://localhost:8080/api/v1/student/getassignment"
+  //       );
+  //       if (response2.data && response2.data.data) {
+  //         setassign_name(response2.data.data);
+  //         //console.log("responce", response2.data.data);
+  //       }
+  //       const trainerData123 = response2.data.data.filter(
+  //         (user) => user.assignment_name
+  //       );
+  //       // console.log("asssinnnn123", trainerData123);
+  //       setassign_name(trainerData123);
+  //       //  setOptions(response1.data.data); // Assuming the response is an array of objects
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response1 = await axios.get(
+  //         "http://localhost:8080/api/v1/student/getusers"
+  //       );
+  //       if (response1.data && response1.data.data) {
+  //         setOptions(response1.data.data);
+  //         // console.log(response1.data.data);
+  //       }
+  //       const trainerData = response1.data.data.filter(
+  //         (user) => user.user_role === "trainer"
+  //       );
+  //       setOptions(trainerData);
+  //       // console.log("trainerData",trainerData)
+  //       //  setOptions(response1.data.data); // Assuming the response is an array of objects
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -127,7 +168,7 @@ function AddStudentsAssign({ streamId }) {
     create_time: currentTime,
     create_date: formattedDate,
     trainer_name: "",
-    student_name: "",
+    student_name: retrievedArray.user_name,
   });
 
   // Function to handle form input changes
@@ -147,7 +188,7 @@ function AddStudentsAssign({ streamId }) {
 
       // Send POST request to your API endpoint
       const response = await axios.post(
-        "http://localhost:8080/api/v1/student/addStudentAssignment",
+        "http://localhost:8080/api/v1/student/addStudentAssignment1",
         formData
       );
       console.log("Record inserted successfully:", response.data);
@@ -157,7 +198,7 @@ function AddStudentsAssign({ streamId }) {
       console.error("Error inserting record:", error);
       // Handle error (e.g., display error message to user)
     }
-    console.log(formData);
+    console.log("formData", formData);
     // Pass formData to another function
     submitFormData(formData);
     navigate("/ViewStudentAssign");
@@ -178,7 +219,7 @@ function AddStudentsAssign({ streamId }) {
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Add Assignments Students </h1>
+                  <h1 class="m-0 text-dark">Submission</h1>
                 </div>
 
                 <div class="col-sm-6">
@@ -229,13 +270,24 @@ function AddStudentsAssign({ streamId }) {
                                 {/* <!-- Example single danger button --> */}
                                 <div class="form-group">
                                   <label> Assignment Name </label>
-                                  <select
+                                  <input
+                                    type="text"
+                                    name="assignment_name"
+                                    readOnly
+                                    class="form-control"
+                                    id="assignment_name"
+                                    aria-describedby="emailHelp"
+                                    value={formData.assignment_name}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Class"
+                                  />
+                                  {/* <select
                                     name="assignment_name"
                                     class="form-control"
                                     id="assignment_name"
                                     value={formData.assignment_name}
                                     onChange={handleSelectChangeassignment}
-                                  >
+                                   >
                                     <option value="active">
                                       please select
                                     </option>
@@ -248,17 +300,28 @@ function AddStudentsAssign({ streamId }) {
                                       </option>
                                     ))}
                                     {/* <option value="inactive">Inactive</option> */}
-                                  </select>
+                                  {/* </select> */}
                                 </div>
                                 <div class="form-group">
                                   <label> Batch </label>
-                                  <select
+                                  <input
+                                    type="text"
+                                    name="batch_name"
+                                    readOnly
+                                    class="form-control"
+                                    id="batch_name"
+                                    aria-describedby="emailHelp"
+                                    value={formData.batch_name}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Class"
+                                  />
+                                  {/* <select
                                     name="batch_name"
                                     class="form-control"
                                     id="batch_name"
                                     value={formData.batch_name}
                                     onChange={handleSelectChangebatch}
-                                  >
+                                   >
                                     <option value="active">
                                       please select
                                     </option>
@@ -271,7 +334,7 @@ function AddStudentsAssign({ streamId }) {
                                       </option>
                                     ))}
                                     {/* <option value="inactive">Inactive</option> */}
-                                  </select>
+                                  {/* </select> */}
                                 </div>
                                 {/* <div class="form-group">
                                   <label> Active/Inactive </label>
@@ -354,13 +417,24 @@ function AddStudentsAssign({ streamId }) {
                                     <span class="text-danger">*</span>
                                   </label>
                                   <br />
-                                  <select
+                                  <input
+                                    type="text"
+                                    name="trainer_name"
+                                    readOnly
+                                    class="form-control"
+                                    id="trainer_name"
+                                    aria-describedby="emailHelp"
+                                    value={formData.trainer_name}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Class"
+                                  />
+                                  {/* <select
                                     name="trainer_name"
                                     class="form-control"
                                     id="trainer_name"
                                     value={formData.trainer_name}
                                     onChange={handleSelectChangeTrainer}
-                                  >
+                                   >
                                     <option value="active">
                                       please select
                                     </option>
@@ -373,7 +447,7 @@ function AddStudentsAssign({ streamId }) {
                                       </option>
                                     ))}
                                     {/* <option value="inactive">Inactive</option> */}
-                                  </select>
+                                  {/* </select> */}
 
                                   <div></div>
                                 </div>
@@ -382,7 +456,7 @@ function AddStudentsAssign({ streamId }) {
                                   <input
                                     type="text"
                                     name="student_name"
-                                    required
+                                    readOnly
                                     class="form-control"
                                     id="student_name"
                                     aria-describedby="emailHelp"

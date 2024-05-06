@@ -7,35 +7,7 @@ import { Link } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function Attendance() {
-  // const [data, setData] = useState({
-  //   image: "",
-
-  // });
-  // const videoRef = useRef(null);
-
-  // const startWebcam = async (e) => {
-  //   try {
-  //     e.preventDefault();
-  //     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  //     videoRef.current.srcObject = stream;
-  //   } catch (error) {
-  //     console.error('Error accessing webcam:', error);
-  //   }
-  // };
-
-  // const webcamRef = useRef(null);
-
-  // // Function to capture an image
-  // const capture = (e) => {
-  //   e.preventDefault();
-  //   const imageSrc = webcamRef.current.getScreenshot();
-  //   setData({
-  //     image: imageSrc,
-  //   });
-  //   console.log("image", imageSrc); // Use imageSrc as needed, such as saving or displaying the image
-  // };
-
+function ViewMyAssignment() {
   const currentTime = moment().format("HH:mm:ss");
   const currentDate = new Date();
   const formattedDate = moment(currentDate).format("DD/MM/YYYY");
@@ -48,7 +20,7 @@ function Attendance() {
       try {
         // Make a GET request to the API endpoint
         const response = await axios.get(
-          "http://localhost:8080/api/v1/student/getbatches"
+          "http://localhost:8080/api/v1/student/getassignment"
         );
         if (response.data && response.data.data) {
           setData(response.data.data);
@@ -105,7 +77,7 @@ function Attendance() {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Batches </h1>
+                <h1 class="m-0 text-dark">My Assignment </h1>
               </div>
 
               <div class="col-sm-6">
@@ -254,16 +226,15 @@ function Attendance() {
                       <thead>
                         <tr>
                           <th>Sr No</th>
-                          <th>Batch Name</th>
-
+                          <th>Assignment Name</th>
                           <th>Description</th>
-                          <th>start Time</th>
-                          <th>End Time</th>
-                          <th>Batch Type</th>
+                          <th>Batch Name</th>
+                          {/* <th>Batch Status</th> */}
+                          {/* <th>Created Date</th> */}
                           <th>Trainer Name</th>
-                          <th>Status</th>
-                          <th>Date</th>
-                          {/* <th>Action</th> */}
+                          <th>Start Date</th>
+                          <th>End Date</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
 
@@ -274,19 +245,39 @@ function Attendance() {
                             return (
                               <tr key={index}>
                                 <td>{user.id}</td>
+                                <td>{user.assignment_name}</td>
+
+                                <td>{user.assignment_description}</td>
                                 <td>{user.batch_name}</td>
-
-                                <td>{user.description}</td>
-                                <td>{user.start_time}</td>
-                                <td>{user.end_time}</td>
-                                <td>{user.batch_type}</td>
-
+                                {/* <td>{user.batch_status}</td> */}
+                                {/* <td>{user.create_date}</td> */}
                                 <td>{user.trainer_name}</td>
-                                <td>{user.batch_status}</td>
-                                <td>{user.date}</td>
-                                {/* <td><button type="button" class="btn btn-primary" >
-                                
-                                            </button></td> */}
+                                <td>{user.start_date}</td>
+                                <td>{user.end_date}</td>
+                                <td>
+                                  <button
+                                    style={{ marginRight: "10px" }}
+                                    type="button"
+                                    class="btn btn-primary btn-sm"
+                                  >
+                                    Pending
+                                  </button>
+
+                                  <button
+                                    style={{ marginRight: "10px" }}
+                                    type="button"
+                                    class="btn btn-warning btn-sm"
+                                  >
+                                    Inprogress
+                                  </button>
+                                  <Link
+                                    type="button"
+                                    class="btn btn-success btn-sm"
+                                    to={`/addStudentsAssignment/${user.id}`}
+                                  >
+                                    Complete
+                                  </Link>
+                                </td>
                                 {/* <td>{user.webcam}</td> */}
                               </tr>
                             );
@@ -411,4 +402,4 @@ function Attendance() {
   );
 }
 
-export default Attendance;
+export default ViewMyAssignment;

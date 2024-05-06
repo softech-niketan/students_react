@@ -16,10 +16,12 @@ function Login(onLogin) {
   const formattedDate = moment(currentDate).format("DD/MM/YYYY");
 
   const [formData, setFormData] = useState({
-    name: "",
+    user_name: "",
     email: "",
-    password: "",
+    user_password: "",
     class_name: "",
+    status: "active",
+    user_role: "student",
     in_time: currentTime,
     date: formattedDate,
   });
@@ -35,27 +37,42 @@ function Login(onLogin) {
   const [data, setData] = useState([]);
   const [option, setoption] = useState("");
   const [decodedData, setDecodedData] = useState([]);
-  console.log("211111111", option.data);
+  // console.log("211111111", option.data);
 
   // Function to handle form submission
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(
-          "http://localhost:8080/api/v1/student/register_student_getall",
-          { formData }
+          "http://localhost:8080/api/v1/student/getusersbyemailregister123",
+          {
+            params: {
+              email: formData.email, // Assuming 'email' is the parameter you want to send
+            },
+          }
         );
 
         if (response1.data && response1.data.data) {
           setoption(response1.data.data);
-          console.log("reasponce123", response1.data.data);
         }
-        const trainerData = response1.data.data.filter(
-          (students) => students.email === formData.email
-        );
+        const email_already_data = response1.data.data[0];
+
+        // console.log("email_already_data", email_already_data);
+
+        if (email_already_data) {
+          alert("wrong");
+        } else {
+        }
+
+        // localStorage.setItem("student", response1.data.data);
+
+        // console.log(" response1.data.data", response1.data.data);
+        // const trainerData = response1.data.data.filter(
+        //   (students) => students.email === formData.email
+        // );
         // console.log("trainerData",trainerData);
 
-        setoption(trainerData);
+        // setoption(trainerData);
 
         //  setOptions(response1.data.data); // Assuming the response is an array of objects
       } catch (error) {
@@ -72,22 +89,20 @@ function Login(onLogin) {
     event.preventDefault(); // Prevent default form submission behavior
 
     try {
-      // Send POST request to your API endpoint
       const response = await axios.post(
         "http://localhost:8080/api/v1/student/register",
         formData
       );
-      console.log("Record inserted successfully:", response.data);
-      // Optionally, reset the form fields after successful insertion
-      // setFormData({ name: '', class_name:'', date:'',in_time:'' });
+      console.log("Record inserted successfully999", response.data);
+      alert("user pass wrong");
     } catch (error) {
       console.error("Error inserting record:", error);
       // Handle error (e.g., display error message to user)
     }
-
+    console.log(formData);
     // Pass formData to another function
     submitFormData(formData);
-    navigate("/dashbord");
+    // navigate("/dashbord");
   };
 
   // Function to handle form submission data
@@ -130,8 +145,8 @@ function Login(onLogin) {
                   <input
                     type="text"
                     required
-                    name="name"
-                    value={formData.name}
+                    name="user_name"
+                    value={formData.user_name}
                     onChange={handleChange}
                     class="form-control"
                     placeholder="Name"
@@ -161,8 +176,8 @@ function Login(onLogin) {
                   <div class="col-lg-6">
                     <input
                       type="password"
-                      name="password"
-                      value={formData.password}
+                      name="user_password"
+                      value={formData.user_password}
                       onChange={handleChange}
                       class="form-control"
                       placeholder="Password"
@@ -178,7 +193,7 @@ function Login(onLogin) {
                       type="text"
                       required
                       name="class_name"
-                      value={formData.class}
+                      value={formData.class_name}
                       onChange={handleChange}
                       class="form-control"
                       placeholder="Class"

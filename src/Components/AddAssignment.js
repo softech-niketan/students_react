@@ -7,6 +7,7 @@ import axios from "axios";
 
 function AddAssignment({ streamId }) {
   const navigate = useNavigate();
+  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
 
   const currentTime = moment().format("HH:mm:ss");
   const currentDate = new Date();
@@ -14,7 +15,9 @@ function AddAssignment({ streamId }) {
 
   const [selectedOption, setSelectedOption] = useState("");
   const [options, setOptions] = useState([]);
-  console.log("optionsssss", options);
+  // console.log("optionsssss", options);
+  const [batches, setbatches] = useState([]);
+  //console.log("optionsssss", batches);
 
   const handleStatusChange = (event) => {
     // console.log("batch_type", event);
@@ -35,7 +38,17 @@ function AddAssignment({ streamId }) {
       batch_status: batch_status, // Update user_role with the new value
     });
   };
+  const handleSelectChangeBatches = (event) => {
+    //console.log("trainer", event);
+    const batch_name = event.target.value;
+    console.log("batches_name", batch_name);
 
+    setFormData({
+      ...formData, // Spread the existing formData
+
+      batch_name: batch_name, // Update user_role with the new value
+    });
+  };
   const handleSelectChangeTrainer = (event) => {
     //console.log("trainer", event);
     const trainer_name = event.target.value;
@@ -47,7 +60,28 @@ function AddAssignment({ streamId }) {
       trainer_name: trainer_name, // Update user_role with the new value
     });
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/student/getbatches"
+        );
+        if (response.data && response.data.data) {
+          setbatches(response.data.data);
+          //console.log(response1.data.data);
+        }
+        // const trainerData = response.data.data.filter(
+        //   (user) => user.user_role === "trainer"
+        // );
+        // setOptions(trainerData);
+        //  setOptions(response1.data.data); // Assuming the response is an array of objects
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,7 +90,7 @@ function AddAssignment({ streamId }) {
         );
         if (response1.data && response1.data.data) {
           setOptions(response1.data.data);
-          console.log(response1.data.data);
+          //console.log(response1.data.data);
         }
         const trainerData = response1.data.data.filter(
           (user) => user.user_role === "trainer"
@@ -79,7 +113,7 @@ function AddAssignment({ streamId }) {
     assignment_description: "",
     create_time: currentTime,
     create_date: formattedDate,
-    trainer_name: "",
+    trainer_name: retrievedArray.user_name,
     start_date: "",
     end_date: "",
   });
@@ -106,7 +140,7 @@ function AddAssignment({ streamId }) {
       );
       console.log("Record inserted successfully:", response.data);
       // Optionally, reset the form fields after successful insertion
-      // setFormData({ name: '', class_name:'', date:'',in_time:'' });
+      // setFormData({ name: '',  className_name:'', date:'',in_time:'' });
     } catch (error) {
       console.error("Error inserting record:", error);
       // Handle error (e.g., display error message to user)
@@ -114,7 +148,7 @@ function AddAssignment({ streamId }) {
     console.log(formData);
     // Pass formData to another function
     submitFormData(formData);
-    // navigate("/View_batches");
+    navigate("/viewassignment");
   };
 
   // Function to handle form submission data
@@ -127,17 +161,17 @@ function AddAssignment({ streamId }) {
   return (
     <>
       <div>
-        <div class="">
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Add Assignment </h1>
+        <div className="">
+          <div className="content-header">
+            <div className="container-fluid">
+              <div className="row mb-2">
+                <div className="col-sm-6">
+                  <h1 className="m-0 text-dark">Add Assignment </h1>
                 </div>
 
-                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
+                <div className="col-sm-6">
+                  <ol className="breadcrumb float-sm-right">
+                    <li className="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -145,49 +179,56 @@ function AddAssignment({ streamId }) {
               </div>
             </div>
           </div>
-          <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link to="/viewassignment" type="button" class="btn btn-primary">
+          <div className="card-header1 " style={{ marginLeft: "15px" }}>
+            <Link
+              to="/viewassignment"
+              type="button"
+              className="btn btn-primary"
+            >
               {" "}
               View Assignment{" "}
             </Link>
           </div>
-          <section class="content">
+          <section className="content">
             <div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="row">
-                    <div class="col-lg-4 ml-3"></div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="row">
+                    <div className="col-lg-4 ml-3"></div>
                   </div>
 
                   <div
-                    class="modal123 fade123"
+                    className="modal123 fade123"
                     id="exampleModal"
                     tabindex="-1"
                     role="dialog"
                     aria-labelledby="exampleModalLabel1"
                     aria-hidden="true"
                   >
-                    <div class="modal-dialog1 " role="document">
-                      <div class="modal-content1">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"></h5>
-                          {/* <button type="button" class="close" data-dismiss="modal"
+                    <div className="modal-dialog1 " role="document">
+                      <div className="modal-content1">
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="exampleModalLabel"
+                          ></h5>
+                          {/* <button type="button"  className="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button> */}
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                           <form onSubmit={handleAttendanceSubmit}>
-                            <div class="row">
-                              <div class="col-lg-6">
+                            <div className="row">
+                              <div className="col-lg-6">
                                 {/* <!-- Example single danger button --> */}
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Assignment Name </label>
                                   <input
                                     type="name"
                                     name="assignment_name"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="assignment_name"
                                     aria-describedby="emailHelp"
                                     value={formData.name}
@@ -195,26 +236,46 @@ function AddAssignment({ streamId }) {
                                     placeholder="Enter Name"
                                   />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Batch </label>
-                                  <input
+                                  <select
+                                    name="batch_name"
+                                    className="form-control"
+                                    id="batch_name"
+                                    value={formData.batch_name}
+                                    onChange={handleSelectChangeBatches}
+                                  >
+                                    <option value="active">
+                                      please select
+                                    </option>
+                                    {batches.map((batch_name) => (
+                                      <option
+                                        key={batch_name.batch_name}
+                                        value={batch_name.batch_name}
+                                      >
+                                        {batch_name.batch_name}
+                                      </option>
+                                    ))}
+                                    {/* <option value="inactive">Inactive</option> */}
+                                  </select>
+                                  {/* <input
                                     type="text"
                                     name="batch_name"
                                     required
-                                    class="form-control"
+                                     className="form-control"
                                     id="batch_name"
                                     aria-describedby="emailHelp"
                                     value={formData.name}
                                     onChange={handleInputChange}
                                     placeholder="Enter Name"
-                                  />
+                                  /> */}
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Active/Inactive </label>
                                   <br />
                                   <select
                                     name="batch_status"
-                                    class="form-control"
+                                    className="form-control"
                                     id="batch_status"
                                     value={formData.batch_status}
                                     onChange={handleSelectChange}
@@ -226,26 +287,26 @@ function AddAssignment({ streamId }) {
                                 </div>
                               </div>
 
-                              <div class="col-lg-5">
-                                <div class="form-group">
+                              <div className="col-lg-5">
+                                <div className="form-group">
                                   <label> Assignment Description </label>
                                   <input
                                     type="text"
                                     name="assignment_description"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="description"
                                     aria-describedby="emailHelp"
-                                    value={formData.class}
+                                    value={formData.className}
                                     onChange={handleInputChange}
-                                    placeholder="Enter Class"
+                                    placeholder="Enter  className"
                                   />
 
                                   <input
                                     type="hidden"
                                     name="create_time"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="create_time"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -258,7 +319,7 @@ function AddAssignment({ streamId }) {
                                     type="hidden"
                                     name="create_date"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="create_date"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -269,15 +330,26 @@ function AddAssignment({ streamId }) {
                                 </div>
                                 <div></div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label for="on click url">
                                     Trainer Name
-                                    <span class="text-danger">*</span>
+                                    <span className="text-danger">*</span>
                                   </label>
                                   <br />
-                                  <select
+                                  <input
+                                    type="text"
                                     name="trainer_name"
-                                    class="form-control"
+                                    readOnly
+                                    className="form-control"
+                                    id="trainer_name"
+                                    aria-describedby="emailHelp"
+                                    value={formData.trainer_name}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter  className"
+                                  />
+                                  {/* <select
+                                    name="trainer_name"
+                                     className="form-control"
                                     id="trainer_name"
                                     value={formData.trainer_name}
                                     onChange={handleSelectChangeTrainer}
@@ -294,52 +366,52 @@ function AddAssignment({ streamId }) {
                                       </option>
                                     ))}
                                     {/* <option value="inactive">Inactive</option> */}
-                                  </select>
+                                  {/* </select> */}
 
                                   <div></div>
                                 </div>
-                                <div class="row">
-                                  <div class="form-group col-lg-6">
+                                <div className="row">
+                                  <div className="form-group col-lg-6">
                                     <label for="on click url">
                                       Start Date
-                                      <span class="text-danger">*</span>
+                                      <span className="text-danger">*</span>
                                     </label>
                                     <br />
                                     <input
                                       type="date"
                                       name="start_date"
                                       required
-                                      class="form-control"
+                                      className="form-control"
                                       id="start_date"
                                       aria-describedby="emailHelp"
-                                      value={formData.class}
+                                      value={formData.className}
                                       onChange={handleInputChange}
-                                      placeholder="Enter Class"
+                                      placeholder="Enter  className"
                                     />
                                   </div>
-                                  <div class="form-group col-lg-6">
+                                  <div className="form-group col-lg-6">
                                     <label for="on click url">
                                       End Date
-                                      <span class="text-danger">*</span>
+                                      <span className="text-danger">*</span>
                                     </label>
                                     <br />
                                     <input
                                       type="date"
                                       name="end_date"
                                       required
-                                      class="form-control"
+                                      className="form-control"
                                       id="end_date"
                                       aria-describedby="emailHelp"
-                                      value={formData.class}
+                                      value={formData.className}
                                       onChange={handleInputChange}
-                                      placeholder="Enter Class"
+                                      placeholder="Enter  className"
                                     />
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="modal-footer">
+                              <button type="submit" className="btn btn-primary">
                                 Save changes
                               </button>
                             </div>
@@ -348,11 +420,11 @@ function AddAssignment({ streamId }) {
                       </div>
                     </div>
                   </div>
-                  <div class="card123">
-                    {/* <div class="card-header">
+                  <div className="card123">
+                    {/* <div  className="card-header">
                     <button
                       type="button"
-                      class="btn btn-primary"
+                       className="btn btn-primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -360,16 +432,16 @@ function AddAssignment({ streamId }) {
                     </button>
                   </div> */}
 
-                    <div class="card-body">
+                    <div className="card-body">
                       <table
                         id="example1"
-                        class="table table-bordered table-striped"
+                        className="table table-bordered table-striped"
                       >
                         {/* <thead>
                         <tr>
                           <th>Sr No</th>
                           <th>Students Name</th>
-                          <th>Students Class</th>
+                          <th>Students  className</th>
                           <th>Date</th>
                           <th>In Time</th>
 
@@ -387,7 +459,7 @@ function AddAssignment({ streamId }) {
                           <td>
                               <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                               className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -404,7 +476,7 @@ function AddAssignment({ streamId }) {
                           <td>
                           <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                               className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -415,39 +487,42 @@ function AddAssignment({ streamId }) {
                         </tbody>
                       </table>
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="webcamModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog " role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
+                        <div className="modal-dialog " role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLabel"
+                              >
                                 Add Attendance
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                               >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <form onSubmit={handleInputChange}>
-                                <div class="row">
-                                  <div class="col-lg-12">
+                                <div className="row">
+                                  <div className="col-lg-12">
                                     {/* <!-- Example single danger button --> */}
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Name </label>
                                       <input
                                         type="text"
                                         name="name"
-                                        class="form-control"
+                                        className="form-control"
                                         id="name"
                                         aria-describedby="emailHelp"
                                         // value={formData1.name}
@@ -456,7 +531,7 @@ function AddAssignment({ streamId }) {
                                       />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Web cam </label>
 
                                       <WebcamComponent />
@@ -475,17 +550,17 @@ function AddAssignment({ streamId }) {
                                 <video  width={200}  height={200} ref={videoRef} autoPlay></video> */}
                                   </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div className="modal-footer">
                                   <button
                                     type="button"
-                                    class="btn btn-secondary"
+                                    className="btn btn-secondary"
                                     data-dismiss="modal"
                                   >
                                     Close
                                   </button>
                                   <button
                                     type="submit1"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                   >
                                     Save changes
                                   </button>

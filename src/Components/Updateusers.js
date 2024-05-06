@@ -1,69 +1,81 @@
 // import React from 'react'
 import React, { useRef, useState, useEffect } from "react";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function AddAttendance({ streamId }) {
-  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
-  console.log(retrievedArray.user_name);
+function Updateusers() {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const currentTime = moment().format("HH:mm:ss");
-  const currentDate = new Date();
-  const formattedDate = moment(currentDate).format("DD/MM/YYYY");
+  //   const currentTime = moment().format("HH:mm:ss");
+  //   const currentDate = new Date();
+  //   const formattedDate = moment(currentDate).format("DD/MM/YYYY");
 
   const [selectedOption, setSelectedOption] = useState("");
-  const [options, setOptions] = useState([]);
-  //console.log("optionsssss", options);
 
   const handleStatusChange = (event) => {
-    // console.log("batch_type", event);
     const value = event.target.value;
-    console.log("batch_type", value);
     setFormData({
       ...formData, // Spread the existing formData
-      batch_type: value, // Update status with the new value
+      status: value, // Update status with the new value
     });
   };
   const handleSelectChange = (event) => {
-    //console.log(event);
-    const batch_status = event.target.value;
-    console.log("batch_status", batch_status);
+    const value = event.target.value;
     setFormData({
       ...formData, // Spread the existing formData
 
-      batch_status: batch_status, // Update user_role with the new value
+      user_role: value, // Update user_role with the new value
     });
   };
-
-  const handleSelectChangeTrainer = (event) => {
-    //console.log("trainer", event);
-    const trainer_name = event.target.value;
-    console.log("trainer", trainer_name);
-
-    setFormData({
-      ...formData, // Spread the existing formData
-
-      trainer_name: trainer_name, // Update user_role with the new value
-    });
-  };
+  const [option, setoption] = useState([]);
+  // const password = option[0];
+  //   const password1 = password.email;
+  //   console.log("password", password1);
+  //   const [formData, setFormData] = useState([])
+  //console.log(password.email);
+  const [formData, setFormData] = useState({
+    id: "",
+    user_name: "",
+    user_password: "",
+    status: "",
+    email: "",
+    in_time: "",
+    date: "",
+    user_role: "",
+  });
+  //console.log("d",formData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(
-          "http://localhost:8080/api/v1/student/getusers"
+          `http://localhost:8080/api/v1/student/getusers_byid/${id}`,
+          {
+            params: {
+              id: id, // Assuming 'email' is the parameter you want to send
+            },
+          }
         );
+
         if (response1.data && response1.data.data) {
-          setOptions(response1.data.data);
-          console.log(response1.data.data);
+          setoption(response1.data.data);
         }
-        const trainerData = response1.data.data.filter(
-          (user) => user.user_role === "trainer"
-        );
-        setOptions(trainerData);
+        const record_data = response1.data.data[0];
+        setFormData({
+          ...formData,
+          id: record_data.id,
+          user_name: record_data.user_name,
+          user_password: record_data.user_password,
+          status: record_data.status,
+          email: record_data.email,
+          in_time: record_data.in_time,
+          date: record_data.date,
+          user_role: record_data.user_role,
+        });
+        //console.log("record_data",record_data);
         //  setOptions(response1.data.data); // Assuming the response is an array of objects
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -72,19 +84,6 @@ function AddAttendance({ streamId }) {
 
     fetchData();
   }, []);
-
-  const [formData, setFormData] = useState({
-    id: "",
-    batch_name: "",
-    batch_type: "",
-    batch_status: "",
-    description: "",
-    in_time: currentTime,
-    date: formattedDate,
-    trainer_name: retrievedArray.user_name,
-    start_time: "",
-    end_time: "",
-  });
 
   // Function to handle form input changes
   const handleInputChange = (event, imageData) => {
@@ -99,20 +98,9 @@ function AddAttendance({ streamId }) {
     event.preventDefault(); // Prevent default form submission behavior
 
     try {
-      // const response1 = await axios.get(
-      //   "http://localhost:8080/api/v1/student/getusers"
-      // );
-      // console.log("rrrrrr", response1);
-      // if (response1.data && response1.data.data) {
-      //   setOptions(response1.data.data);
-      //   console.log(response1.data.data);
-      // }
-
-      // Assuming the response data is an array of options
-
       // Send POST request to your API endpoint
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/student/addbatch",
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/student/update/${id}`,
         formData
       );
       console.log("Record inserted successfully:", response.data);
@@ -122,10 +110,11 @@ function AddAttendance({ streamId }) {
       console.error("Error inserting record:", error);
       // Handle error (e.g., display error message to user)
     }
-    console.log(formData);
+
     // Pass formData to another function
     submitFormData(formData);
-    navigate("/View_batches");
+    console.log("formData24", formData);
+    navigate("/viewusers");
   };
 
   // Function to handle form submission data
@@ -133,7 +122,6 @@ function AddAttendance({ streamId }) {
     // Here, you can perform any action with the form data, such as sending it to an API
     console.log("Form data submitted:", formData);
   };
-  const filteredData = options.filter((item) => item.status === "trainer");
 
   return (
     <>
@@ -143,7 +131,7 @@ function AddAttendance({ streamId }) {
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Add Batches </h1>
+                  <h1 class="m-0 text-dark">Add Users </h1>
                 </div>
 
                 <div class="col-sm-6">
@@ -156,12 +144,12 @@ function AddAttendance({ streamId }) {
               </div>
             </div>
           </div>
-          <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link to="/View_batches" type="button" class="btn btn-primary">
+          {/* <div class="card-header1 " style={{ marginLeft: "15px" }}>
+            <Link to="/viewusers" type="button" class="btn btn-primary">
               {" "}
-              View Batches{" "}
+              View Users{" "}
             </Link>
-          </div>
+          </div> */}
           <section class="content">
             <div>
               <div class="row">
@@ -193,44 +181,43 @@ function AddAttendance({ streamId }) {
                               <div class="col-lg-6">
                                 {/* <!-- Example single danger button --> */}
                                 <div class="form-group">
-                                  <label> Batch Name </label>
+                                  <label> User Name </label>
                                   <input
                                     type="name"
-                                    name="batch_name"
+                                    name="user_name"
                                     required
                                     class="form-control"
-                                    id="batch_name"
+                                    id="user_name"
                                     aria-describedby="emailHelp"
-                                    value={formData.name}
+                                    value={formData.user_name}
                                     onChange={handleInputChange}
                                     placeholder="Enter Name"
                                   />
                                 </div>
                                 <div class="form-group">
-                                  <label> Batch Type </label>
-                                  <select
-                                    name="batch_type"
+                                  <label> Password </label>
+                                  <input
+                                    type="text"
+                                    name="user_password"
+                                    required
                                     class="form-control"
-                                    id="batch_type"
-                                    value={formData.batch_type}
-                                    onChange={handleStatusChange}
-                                  >
-                                    <option value="">please select</option>
-                                    <option value="offline">Offline</option>
-                                    <option value="online">Online</option>
-                                  </select>
+                                    id="user_password"
+                                    aria-describedby="emailHelp"
+                                    value={formData.user_password}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Class"
+                                  />
                                 </div>
                                 <div class="form-group">
                                   <label> Active/Inactive </label>
                                   <br />
                                   <select
-                                    name="batch_status"
+                                    // name="status"
                                     class="form-control"
-                                    id="batch_status"
-                                    value={formData.batch_status}
-                                    onChange={handleSelectChange}
+                                    id="status"
+                                    value={formData.status}
+                                    onChange={handleStatusChange}
                                   >
-                                    <option value="">please select</option>
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                   </select>
@@ -239,15 +226,15 @@ function AddAttendance({ streamId }) {
 
                               <div class="col-lg-5">
                                 <div class="form-group">
-                                  <label> Batch Description </label>
+                                  <label> Email </label>
                                   <input
                                     type="text"
-                                    name="description"
+                                    name="email"
                                     required
                                     class="form-control"
-                                    id="description"
+                                    id="user_password"
                                     aria-describedby="emailHelp"
-                                    value={formData.class}
+                                    value={formData.email}
                                     onChange={handleInputChange}
                                     placeholder="Enter Class"
                                   />
@@ -282,81 +269,22 @@ function AddAttendance({ streamId }) {
 
                                 <div class="form-group">
                                   <label for="on click url">
-                                    Trainer Name
+                                    Select Role
                                     <span class="text-danger">*</span>
                                   </label>
                                   <br />
-                                  <input
-                                    type="text"
-                                    name="trainer_name"
-                                    readOnly
+                                  <select
+                                    name="user_role"
                                     class="form-control"
-                                    id="trainer_name"
-                                    aria-describedby="emailHelp"
-                                    value={formData.trainer_name}
-                                    onChange={handleInputChange}
-                                    placeholder="Enter Class"
-                                  />
-                                  {/* <select
-                                    name="trainer_name"
-                                    class="form-control"
-                                    id="trainer_name"
-                                    value={formData.trainer_name}
-                                    onChange={handleSelectChangeTrainer}
-                                   >
-                                    <option value="active">
-                                      please select
-                                    </option>
-                                    {options.map((trainer) => (
-                                      <option
-                                        key={trainer.user_name}
-                                        value={trainer.user_name}
-                                      >
-                                        {trainer.user_name}
-                                      </option>
-                                    ))}
-                                    {/* <option value="inactive">Inactive</option> */}
-                                  {/* </select> */}
+                                    id="user_role"
+                                    value={formData.user_role}
+                                    onChange={handleSelectChange}
+                                  >
+                                    <option value="admin">Admin</option>
+                                    <option value="trainer">Trainer</option>
+                                  </select>
 
                                   <div></div>
-                                </div>
-                                <div class="row">
-                                  <div class="form-group col-lg-6">
-                                    <label for="on click url">
-                                      Start Time
-                                      <span class="text-danger">*</span>
-                                    </label>
-                                    <br />
-                                    <input
-                                      type="time"
-                                      name="start_time"
-                                      required
-                                      class="form-control"
-                                      id="start_time"
-                                      aria-describedby="emailHelp"
-                                      value={formData.class}
-                                      onChange={handleInputChange}
-                                      placeholder="Enter Class"
-                                    />
-                                  </div>
-                                  <div class="form-group col-lg-6">
-                                    <label for="on click url">
-                                      End Time
-                                      <span class="text-danger">*</span>
-                                    </label>
-                                    <br />
-                                    <input
-                                      type="time"
-                                      name="end_time"
-                                      required
-                                      class="form-control"
-                                      id="end_time"
-                                      aria-describedby="emailHelp"
-                                      value={formData.class}
-                                      onChange={handleInputChange}
-                                      placeholder="Enter Class"
-                                    />
-                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -529,4 +457,4 @@ function AddAttendance({ streamId }) {
   );
 }
 
-export default AddAttendance;
+export default Updateusers;
