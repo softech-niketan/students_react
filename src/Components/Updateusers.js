@@ -45,6 +45,7 @@ function Updateusers() {
     in_time: "",
     date: "",
     user_role: "",
+    total_fees: "",
   });
   //console.log("d",formData);
 
@@ -74,6 +75,7 @@ function Updateusers() {
           in_time: record_data.in_time,
           date: record_data.date,
           user_role: record_data.user_role,
+          total_fees: record_data.total_fees,
         });
         //console.log("record_data",record_data);
         //  setOptions(response1.data.data); // Assuming the response is an array of objects
@@ -224,7 +226,7 @@ function Updateusers() {
                                 </div>
                               </div>
 
-                              <div class="col-lg-5">
+                              <div class="col-lg-6">
                                 <div class="form-group">
                                   <label> Email </label>
                                   <input
@@ -283,8 +285,24 @@ function Updateusers() {
                                     <option value="admin">Admin</option>
                                     <option value="trainer">Trainer</option>
                                   </select>
-
-                                  <div></div>
+                                </div>
+                                <div>
+                                  {" "}
+                                  <label for="on click url">
+                                    Total Fees
+                                    <span class="text-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    name="total_fees"
+                                    required
+                                    class="form-control"
+                                    id="total_fees"
+                                    aria-describedby="emailHelp"
+                                    value={formData.total_fees}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Class"
+                                  />
                                 </div>
                               </div>
                             </div>

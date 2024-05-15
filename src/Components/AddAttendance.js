@@ -10,6 +10,8 @@ import axios from "axios";
 // import 'react-html5-camera-photo/build/css/index.css';
 
 function AddAttendance({ streamId }) {
+  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
+
   // const [image, setImage] = useState("");
 
   // useEffect(() => {
@@ -139,11 +141,12 @@ function AddAttendance({ streamId }) {
 
   const [formData, setFormData] = useState({
     id: "",
-    name: "",
-    class_name: "",
+    name: retrievedArray.user_name,
+    class_name: retrievedArray.class_name,
     date: formattedDate,
     in_time: currentTime,
     webcam: data2,
+    user_id: retrievedArray.id,
   });
 
   // Function to handle form input changes
@@ -197,6 +200,9 @@ function AddAttendance({ streamId }) {
                 <div class="col-sm-6">
                   <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">
+                      <Link to="/attendance">View Attendance</Link>
+                    </li>
+                    <li class="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -205,10 +211,10 @@ function AddAttendance({ streamId }) {
             </div>
           </div>
           <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link to="/attendance" type="button" class="btn btn-primary">
+            {/* <Link to="/attendance" type="button" class="btn btn-primary">
               {" "}
               View Attendance{" "}
-            </Link>
+            </Link> */}
           </div>
           <section class="content">
             <div>
@@ -246,6 +252,7 @@ function AddAttendance({ streamId }) {
                                     type="name"
                                     name="name"
                                     required
+                                    readOnly
                                     class="form-control"
                                     id="name"
                                     aria-describedby="emailHelp"
@@ -259,11 +266,12 @@ function AddAttendance({ streamId }) {
                                   <input
                                     type="text"
                                     name="class_name"
+                                    readOnly
                                     required
                                     class="form-control"
                                     id="class"
                                     aria-describedby="emailHelp"
-                                    value={formData.class}
+                                    value={formData.class_name}
                                     onChange={handleInputChange}
                                     placeholder="Enter Class"
                                   />
@@ -297,6 +305,18 @@ function AddAttendance({ streamId }) {
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
                                     value={formData.in_time}
+                                    onChange={handleInputChange}
+                                    placeholder=""
+                                  />
+                                  <input
+                                    type="hidden"
+                                    name="user_id"
+                                    required
+                                    class="form-control"
+                                    id="user_id"
+                                    aria-describedby="emailHelp"
+                                    // value={currentTime}
+                                    value={formData.user_id}
                                     onChange={handleInputChange}
                                     placeholder=""
                                   />

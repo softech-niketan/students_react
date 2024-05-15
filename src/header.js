@@ -95,6 +95,20 @@ export default function header() {
                   </Link>
                 </li>
               )}
+               {retrievedArray.user_role === "admin" && (
+                <li id="user" class="nav-item">
+                  <Link to="/Viewstudents_fees" class="nav-link">
+                    <p>Students</p>
+                  </Link>
+                </li>
+              )}
+               {retrievedArray.user_role === "admin" && (
+                <li id="user" class="nav-item">
+                  <Link to="/View_student_installment_fees" class="nav-link">
+                    <p>Fees</p>
+                  </Link>
+                </li>
+              )}
               {(retrievedArray.user_role === "admin" ||
                 retrievedArray.user_role === "trainer") && (
                 <li class="nav-item">
@@ -115,6 +129,13 @@ export default function header() {
                 <li class="nav-item">
                   <Link to="/ViewMyAssignment" class="nav-link">
                     <p>My Assignment</p>
+                  </Link>
+                </li>
+              )}
+              {retrievedArray.user_role === "student" && (
+                <li class="nav-item">
+                  <Link to="/ViewUploadedassignment" class="nav-link">
+                    <p>Uploaded Assignment</p>
                   </Link>
                 </li>
               )}

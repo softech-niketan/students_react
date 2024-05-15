@@ -6,6 +6,7 @@ import moment from "moment";
 import { Link, useParams } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
+
 function ViewStudentAssign() {
   const { id } = useParams();
 
@@ -13,89 +14,34 @@ function ViewStudentAssign() {
   const currentDate = new Date();
   const formattedDate = moment(currentDate).format("DD/MM/YYYY");
 
-  const [data, setData] = useState([]);
-  const [data11, setData11] = useState([]);
+
+
+  
+  const [searchTerm, setSearchTerm] = useState("");
   const [totalCount, setTotalCount] = useState(0);
-  const [recordCount, setrecordCount] = useState([]);
-
-  //const resultObject = data11;
-  // const count = resultObject['COUNT(*)'];
-
-  //console.log("data11", data11[0]);
 
   const [input, setinput] = useState("");
   if (!input) {
     const input = "5";
     setinput(input);
   }
-  console.log("data.total_countdata.total_countdata.total_count", data);
-  //console.log("totalCount", data.totalCount);
-  // console.log("pagination", data.length);
-  //  const record = data11;
-  //  record.map((user, index) => {
-  //   {user.id}
-
-  //  })
-
-  // console.log("data11", data11);
-
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const search_value = searchTerm;
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  console.log("currentPage", currentPage);
-  // const itemsPerPage = "5";
-  const itemsPerPage = input;
-
-  // Calculate the indexes for the current page
-  const indexOfLastItem = currentPage * itemsPerPage;
-
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const select = async (event) => {
-    setinput(event.target.value);
-  };
-
-  const handleInputChangesearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSearchTerm(event.target.value);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.get(
-          `http://localhost:8080/api/v1/student/search_studentassign`,
-          {
-            params: {
-              id: searchTerm,
-              currentPage: currentPage,
-              input: input,
-            },
-          }
+          "http://localhost:8080/api/v1/student/getStudentAssignment"
         );
-        console.log("response", response.data.data);
         if (response.data && response.data.data) {
           setData(response.data.data);
-
-          setTotalCount(response.data.totalCount);
-          //console.log(response.data.data);
+          console.log(response.data.data);
         }
+        // Access the data from the response object
+
+        // console.log(response.data);
 
         setLoading(false);
       } catch (error) {
@@ -107,34 +53,7 @@ function ViewStudentAssign() {
 
     // Call the fetchData function when the component mounts
     fetchData();
-  }, [currentPage, searchTerm, input]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // Make a GET request to the API endpoint
-  //       const response = await axios.get(
-  //         "http://localhost:8080/api/v1/student/getStudentAssignment1"
-  //       );
-  //       if (response.data && response.data.data) {
-  //         setData(response.data.data);
-  //         console.log(response.data.data);
-  //       }
-  //       // Access the data from the response object
-
-  //       // console.log(response.data);
-
-  //       setLoading(false);
-  //     } catch (error) {
-  //       // Handle errors
-  //       setError(error.message);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   // Call the fetchData function when the component mounts
-  //   fetchData();
-  // }, []);
+  }, []);
   //console.log("data", data.data);
   const [option, setoption] = useState([]);
 
@@ -151,7 +70,7 @@ function ViewStudentAssign() {
     trainer_remark: "",
     remark_description: "",
   });
-  //console.log("00110011", formData);
+  console.log("00110011", formData);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -276,6 +195,71 @@ function ViewStudentAssign() {
     fetchData();
   };
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  console.log("currentPage", currentPage);
+  // const itemsPerPage = "5";
+  console.log("input", input);
+  const itemsPerPage = input;
+
+  // Calculate the indexes for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleInputChangesearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSearchTerm(searchTerm);
+  };
+  const select = async (event) => {
+    setinput(event.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Make a GET request to the API endpoint
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/student/search_studentassign`,
+          {
+            params: {
+              id: searchTerm,
+              currentPage: currentPage,
+              input: input,
+            },
+          }
+        );
+        console.log("response", response.data.data);
+        if (response.data && response.data.data) {
+          setData(response.data.data);
+
+          setTotalCount(response.data.totalCount);
+          //console.log(response.data.data);
+        }
+      
+
+        setLoading(false);
+      } catch (error) {
+        // Handle errors
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, [currentPage, searchTerm, input]);
   return (
     <div>
       <div class="">
@@ -283,7 +267,7 @@ function ViewStudentAssign() {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Students Assignment </h1>
+                <h1 class="m-0 text-dark">Uploaded Assignment </h1>
               </div>
 
               <div class="col-sm-6">
@@ -341,8 +325,6 @@ function ViewStudentAssign() {
                                   value={formData.trainer_remark}
                                   onChange={handleInputChange}
                                 >
-                                  <option value="">please select</option>
-
                                   <option value="pending">Pending</option>
                                   <option value="complete">Complete</option>
                                 </select>
@@ -508,8 +490,10 @@ function ViewStudentAssign() {
                   </div>
                 </div>
                 <div class="card">
+                
                   <div class="card-body">
-                    <div class="row">
+
+                  <div class="row">
                       <div class="col-6">
                         <select
                           class="form-select"
@@ -526,18 +510,6 @@ function ViewStudentAssign() {
                         class="col-6"
                         style={{ justifyContent: "flex-end", display: "flex" }}
                       >
-                        {/* <form onSubmit={handleSubmit}>
-                      <input
-                        id="Search"
-                        class=" col-8"
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={handleInputChangesearch}
-                      />
-                      <button type="submit">Search</button>
-                     
-                    </form> */}
                         <form
                           onSubmit={handleSubmit}
                           class="form-inline my-2 my-lg-0"
@@ -548,7 +520,7 @@ function ViewStudentAssign() {
                             onChange={handleInputChangesearch}
                             class="form-control mr-sm-2"
                             type="search"
-                            placeholder="Search...."
+                            placeholder="Search....."
                             aria-label="Search"
                           />
                           {/* <button
@@ -577,7 +549,6 @@ function ViewStudentAssign() {
                           <th>Created Date</th>
 
                           <th>Ramark</th>
-                          <th>Ramark Description</th>
                           <th>Status</th>
                         </tr>
                       </thead>
@@ -602,7 +573,7 @@ function ViewStudentAssign() {
                                 </td>
                                 <td>{user.batch_name}</td>
                                 <td>{user.create_date}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     //  style={{ marginRight: "10px" }}
                                     type="button"
@@ -614,16 +585,7 @@ function ViewStudentAssign() {
                                     remark
                                   </button>
 
-                                  {/* <Link
-                                    type="button"
-                                    class="btn btn-success btn-sm"
-                                    onclick={handleAttendanceSubmit}
-                                    // to={`/ViewStudentAssign/${user.id}`}
-                                    onClick={() => completeTask(`${user.id}`)}
-                                  >
-                                    Complete
-                                  </Link> */}
-                                </td>
+                                </td> */}
                                 <td>{user.remark_description}</td>
                                 <td>
                                   {user.trainer_remark === "complete" && (
@@ -631,23 +593,23 @@ function ViewStudentAssign() {
                                       type="button"
                                       class="btn btn-success btn-sm"
                                     >
-                                      Complete
-                                    </button>
-                                  )}
-                                  {user.trainer_remark === "notcheck" && (
-                                    <button
-                                      type="button"
-                                      class="btn btn-danger btn-sm"
-                                    >
-                                      notcheck
+                                      Approved
                                     </button>
                                   )}
                                   {user.trainer_remark === "pending" && (
                                     <button
                                       type="button"
+                                      class="btn btn-danger btn-sm"
+                                    >
+                                      Incomplete
+                                    </button>
+                                  )}
+                                  {user.trainer_remark === "notcheck" && (
+                                    <button
+                                      type="button"
                                       class="btn btn-warning btn-sm"
                                     >
-                                      Resubmit
+                                      Not check
                                     </button>
                                   )}
                                 </td>
@@ -664,7 +626,8 @@ function ViewStudentAssign() {
                       }}
                       class="pagination"
                     >
-                      {currentPage < Math.ceil(totalCount / itemsPerPage) && (
+                      {currentPage <
+                        Math.ceil(totalCount / itemsPerPage) && (
                         <li class="page-item">
                           <button
                             class="page-link"

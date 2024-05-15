@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import Dashbord from "./Components/dashbord";
 import axios from "axios";
+import "./App.css";
 
 import logo from "./assets/images/logo.jpg";
 import React, { useState } from "react";
+
 function Login(onLogin) {
   // const [email, setemail] = useState("");
   // const [password, setPassword] = useState("");
@@ -62,9 +64,9 @@ function Login(onLogin) {
       // formData.user_email === formData.user_email &&
       // formData.user_password === formData.user_password
     ) {
-      alert("Invalid username or password");
+      document.getElementById("myAlert").style.display = "block";
     } else if (user_data.status === "inactive") {
-      alert("Please Contact Admin");
+      document.getElementById("myAlert1").style.display = "block";
     } else {
       navigate("/dashbord");
       submitFormData(formData);
@@ -95,7 +97,12 @@ function Login(onLogin) {
               />
             </Link>
           </div>
-
+          <div class="alert alert-danger col-12  " id="myAlert" role="alert">
+            Invalid Username & Password!
+          </div>
+          <div class="alert alert-danger col-12  " id="myAlert1" role="alert">
+            Please Contact Admin!
+          </div>
           <div class="card">
             <div class="card-header text-center">
               <h3>Students</h3>

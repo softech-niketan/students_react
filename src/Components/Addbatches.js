@@ -84,6 +84,7 @@ function AddAttendance({ streamId }) {
     trainer_name: retrievedArray.user_name,
     start_time: "",
     end_time: "",
+    user_id: retrievedArray.id,
   });
 
   // Function to handle form input changes
@@ -149,6 +150,9 @@ function AddAttendance({ streamId }) {
                 <div class="col-sm-6">
                   <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">
+                      <Link to="/View_batches">View Batches</Link>
+                    </li>
+                    <li class="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -157,10 +161,10 @@ function AddAttendance({ streamId }) {
             </div>
           </div>
           <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link to="/View_batches" type="button" class="btn btn-primary">
+            {/* <Link to="/View_batches" type="button" class="btn btn-primary">
               {" "}
               View Batches{" "}
-            </Link>
+            </Link> */}
           </div>
           <section class="content">
             <div>
@@ -274,6 +278,18 @@ function AddAttendance({ streamId }) {
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
                                     value={formData.date}
+                                    onChange={handleInputChange}
+                                    placeholder=""
+                                  />
+                                   <input
+                                    type="hidden"
+                                    name="user_id"
+                                    required
+                                    class="form-control"
+                                    id="user_id"
+                                    aria-describedby="emailHelp"
+                                    // value={currentTime}
+                                    value={formData.user_id}
                                     onChange={handleInputChange}
                                     placeholder=""
                                   />

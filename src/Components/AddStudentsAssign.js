@@ -169,6 +169,9 @@ function AddStudentsAssign({ streamId }) {
     create_date: formattedDate,
     trainer_name: "",
     student_name: retrievedArray.user_name,
+    trainer_remark: "notcheck",
+    remark_description: "null",
+    user_id: retrievedArray.id,
   });
 
   // Function to handle form input changes
@@ -201,7 +204,7 @@ function AddStudentsAssign({ streamId }) {
     console.log("formData", formData);
     // Pass formData to another function
     submitFormData(formData);
-    navigate("/ViewStudentAssign");
+    navigate("/ViewUploadedassignment");
   };
 
   // Function to handle form submission data
@@ -405,6 +408,44 @@ function AddStudentsAssign({ streamId }) {
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
                                     value={formData.date}
+                                    onChange={handleInputChange}
+                                    placeholder=""
+                                  />
+
+                                  <input
+                                    type="hidden"
+                                    name="trainer_remark"
+                                    required
+                                    class="form-control"
+                                    id="trainer_remark"
+                                    aria-describedby="emailHelp"
+                                    // value={currentTime}
+                                    value={formData.trainer_remark}
+                                    onChange={handleInputChange}
+                                    placeholder=""
+                                  />
+
+                                  <input
+                                    type="hidden"
+                                    name="remark_description"
+                                    required
+                                    class="form-control"
+                                    id="remark_description"
+                                    aria-describedby="emailHelp"
+                                    // value={currentTime}
+                                    value={formData.remark_description}
+                                    onChange={handleInputChange}
+                                    placeholder=""
+                                  />
+                                  <input
+                                    type="hidden"
+                                    name="user_id"
+                                    required
+                                    class="form-control"
+                                    id="user_id"
+                                    aria-describedby="emailHelp"
+                                    // value={currentTime}
+                                    value={formData.user_id}
                                     onChange={handleInputChange}
                                     placeholder=""
                                   />

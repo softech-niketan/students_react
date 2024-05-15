@@ -35,6 +35,7 @@ function Attendance() {
   //   });
   //   console.log("image", imageSrc); // Use imageSrc as needed, such as saving or displaying the image
   // };
+  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
 
   const currentTime = moment().format("HH:mm:ss");
   const currentDate = new Date();
@@ -42,6 +43,7 @@ function Attendance() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [totalCount, setTotalCount] = useState(0);
+  console.log("totalCount", totalCount);
 
   const [input, setinput] = useState("");
   if (!input) {
@@ -140,7 +142,7 @@ function Attendance() {
         setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.get(
-          `http://localhost:8080/api/v1/student/search_user`,
+          `http://localhost:8080/api/v1/student/search_user_students`,
           {
             params: {
               id: searchTerm,
@@ -175,7 +177,7 @@ function Attendance() {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Users </h1>
+                <h1 class="m-0 text-dark">Students fees </h1>
               </div>
 
               <div class="col-sm-6">
@@ -364,12 +366,9 @@ function Attendance() {
                         <tr>
                           <th>Sr No</th>
                           <th>Name</th>
-
-                          <th>Password</th>
                           <th>Status</th>
-                          <th>Email</th>
-                          <th>Date</th>
-                          <th>Role</th>
+                          <th>Total Fees</th>
+                          <th>Join Date</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -382,23 +381,19 @@ function Attendance() {
                               <tr key={index}>
                                 <td>{user.id}</td>
                                 <td>{user.user_name}</td>
-
-                                <td>{user.user_password}</td>
                                 <td>{user.status}</td>
-                                <td>{user.email}</td>
+                                <td>{user.total_fees}</td>
                                 <td>{user.date}</td>
-
-                                <td>{user.user_role}</td>
-                                {/* <td><button type="button" class="btn btn-primary" >
+                                      {/* <td><button type="button" class="btn btn-primary" >
                                          Edit
                                             </button></td> */}
                                 <td>
                                   <Link
                                     class="btn btn-primary"
-                                    to={`/updateusers/${user.id}`}
+                                    to={`/Add_student_fees/${user.id}`}
                                   >
-                                    {" "}
-                                    Edit
+                                
+                                    Add
                                   </Link>
                                 </td>
 

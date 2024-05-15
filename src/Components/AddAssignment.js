@@ -116,6 +116,7 @@ function AddAssignment({ streamId }) {
     trainer_name: retrievedArray.user_name,
     start_date: "",
     end_date: "",
+    user_id: retrievedArray.id,
   });
 
   // Function to handle form input changes
@@ -172,6 +173,9 @@ function AddAssignment({ streamId }) {
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
                     <li className="breadcrumb-item">
+                      <Link to="/viewassignment">View Assignment</Link>
+                    </li>
+                    <li className="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -180,14 +184,14 @@ function AddAssignment({ streamId }) {
             </div>
           </div>
           <div className="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link
+            {/* <Link
               to="/viewassignment"
               type="button"
               className="btn btn-primary"
             >
               {" "}
               View Assignment{" "}
-            </Link>
+            </Link> */}
           </div>
           <section className="content">
             <div>
@@ -324,6 +328,18 @@ function AddAssignment({ streamId }) {
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
                                     value={formData.date}
+                                    onChange={handleInputChange}
+                                    placeholder=""
+                                  />
+                                  <input
+                                    type="hidden"
+                                    name="user_id"
+                                    required
+                                    className="form-control"
+                                    id="user_id"
+                                    aria-describedby="emailHelp"
+                                    // value={currentTime}
+                                    value={formData.user_id}
                                     onChange={handleInputChange}
                                     placeholder=""
                                   />

@@ -43,32 +43,42 @@ function Attendance() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make a GET request to the API endpoint
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/student/getbatches"
-        );
-        if (response.data && response.data.data) {
-          setData(response.data.data);
-          console.log(response.data.data);
-        }
-        // Access the data from the response object
 
-        // console.log(response.data);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [totalCount, setTotalCount] = useState(0);
 
-        setLoading(false);
-      } catch (error) {
-        // Handle errors
-        setError(error.message);
-        setLoading(false);
-      }
-    };
+  const [input, setinput] = useState("");
+  if (!input) {
+    const input = "5";
+    setinput(input);
+  }
 
-    // Call the fetchData function when the component mounts
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Make a GET request to the API endpoint
+  //       const response = await axios.get(
+  //         "http://localhost:8080/api/v1/student/getbatches"
+  //       );
+  //       if (response.data && response.data.data) {
+  //         setData(response.data.data);
+  //         console.log(response.data.data);
+  //       }
+  //       // Access the data from the response object
+
+  //       // console.log(response.data);
+
+  //       setLoading(false);
+  //     } catch (error) {
+  //       // Handle errors
+  //       setError(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   // Call the fetchData function when the component mounts
+  //   fetchData();
+  // }, []);
   //console.log("data", data.data);
 
   const [formData, setFormData] = useState({
@@ -98,6 +108,67 @@ function Attendance() {
     console.log("Form data submitted:", formData);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  console.log("currentPage", currentPage);
+  // const itemsPerPage = "5";
+  console.log("input", input);
+  const itemsPerPage = input;
+
+  // Calculate the indexes for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handleInputChangesearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSearchTerm(event.target.value);
+  };
+  const select = async (event) => {
+    setinput(event.target.value);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Make a GET request to the API endpoint
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/student/search_viewbatch`,
+          {
+            params: {
+              id: searchTerm,
+              currentPage: currentPage,
+              input: input,
+            },
+          }
+        );
+        console.log("response", response.data.data);
+        if (response.data && response.data.data) {
+          setData(response.data.data);
+
+          setTotalCount(response.data.totalCount);
+          //console.log(response.data.data);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        // Handle errors
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, [currentPage, searchTerm, input]);
   return (
     <div>
       <div class="">
@@ -247,6 +318,46 @@ function Attendance() {
                   </div> */}
 
                   <div class="card-body">
+                    <div class="row">
+                      <div class="col-6">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                          onChange={select}
+                        >
+                          <option value="5">select</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="20">20</option>
+                        </select>
+                      </div>
+                      <div
+                        class="col-6"
+                        style={{ justifyContent: "flex-end", display: "flex" }}
+                      >
+                        <form
+                          onSubmit={handleSubmit}
+                          class="form-inline my-2 my-lg-0"
+                        >
+                          <input
+                            id="Search"
+                            value={searchTerm}
+                            onChange={handleInputChangesearch}
+                            class="form-control mr-sm-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                          <button
+                            class="btn btn-outline-primary my-2 my-sm-0"
+                            type="submit"
+                          >
+                            Search
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+
                     <table
                       id="example1"
                       class="table table-bordered table-striped"
@@ -322,6 +433,45 @@ function Attendance() {
                         } */}
                       </tbody>
                     </table>
+                    <ul
+                      style={{
+                        justifyContent: "flex-end",
+                      }}
+                      class="pagination"
+                    >
+                      {currentPage < Math.ceil(totalCount / itemsPerPage) && (
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            onClick={() => paginate(currentPage - 1)}
+                          >
+                            Previous
+                          </button>
+                        </li>
+                      )}
+                      {Array.from({
+                        length: Math.ceil(totalCount / itemsPerPage),
+                      }).map((_, index) => (
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            onClick={() => paginate(index + 1)}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+                      {currentPage < Math.ceil(totalCount / itemsPerPage) && (
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            onClick={() => paginate(currentPage + 1)}
+                          >
+                            Next
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                     <div
                       class="modal fade"
                       id="webcamModal"

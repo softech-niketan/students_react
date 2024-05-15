@@ -20,10 +20,11 @@ function Login(onLogin) {
     email: "",
     user_password: "",
     class_name: "",
-    status: "active",
+    status: "inactive",
     user_role: "student",
     in_time: currentTime,
     date: formattedDate,
+    total_fees: "0",
   });
 
   const handleChange = (e) => {
@@ -57,7 +58,7 @@ function Login(onLogin) {
         }
         const email_already_data = response1.data.data[0];
 
-        // console.log("email_already_data", email_already_data);
+        console.log("email_already_data", email_already_data);
 
         if (email_already_data) {
           alert("wrong");
@@ -94,15 +95,15 @@ function Login(onLogin) {
         formData
       );
       console.log("Record inserted successfully999", response.data);
-      alert("user pass wrong");
+      submitFormData(formData);
+      navigate("/dashbord");
     } catch (error) {
       console.error("Error inserting record:", error);
       // Handle error (e.g., display error message to user)
+      document.getElementById("myAlert").style.display = "block";
     }
-    console.log(formData);
+    console.log("formData", formData);
     // Pass formData to another function
-    submitFormData(formData);
-    // navigate("/dashbord");
   };
 
   // Function to handle form submission data
@@ -130,7 +131,9 @@ function Login(onLogin) {
               />
             </Link>
           </div>
-
+          <div class="alert alert-danger col-12  " id="myAlert" role="alert">
+            Email Id Already Present!!
+          </div>
           <div class="card">
             <div class="card-header text-center">
               <h3>Students</h3>
@@ -212,6 +215,16 @@ function Login(onLogin) {
                       required
                       name="created_time"
                       value={formData.in_time}
+                      onChange={handleChange}
+                      class="form-control"
+                      placeholder="Class"
+                    />
+                    <input
+                      type="hidden"
+                      id="total_fees"
+                      required
+                      name="total_fees"
+                      value={formData.total_fees}
                       onChange={handleChange}
                       class="form-control"
                       placeholder="Class"
