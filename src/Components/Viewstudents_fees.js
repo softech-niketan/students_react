@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function Attendance() {
+function Viewstudents_fees() {
   // const [data, setData] = useState({
   //   image: "",
 
@@ -172,17 +172,17 @@ function Attendance() {
   }, [currentPage, searchTerm, input]);
   return (
     <div>
-      <div class="">
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Students fees </h1>
+      <div className="">
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1 className="m-0 text-dark">Students fees </h1>
               </div>
 
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item">
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
                     <Link to="/dashbord">Home</Link>
                   </li>
                 </ol>
@@ -191,49 +191,49 @@ function Attendance() {
           </div>
         </div>
 
-        <section class="content">
+        <section className="content">
           <div>
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="row">
-                  <div class="col-lg-4 ml-3"></div>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-4 ml-3"></div>
                 </div>
 
                 <div
-                  class="modal fade"
+                  className="modal fade"
                   id="exampleModal"
                   tabindex="-1"
                   role="dialog"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
                 >
-                  <div class="modal-dialog " role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
+                  <div className="modal-dialog " role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">
                           Add Attendance
                         </h5>
                         <button
                           type="button"
-                          class="close"
+                          className="close"
                           data-dismiss="modal"
                           aria-label="Close"
                         >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">
+                      <div className="modal-body">
                         <form onSubmit={handleAttendanceSubmit}>
-                          <div class="row">
-                            <div class="col-lg-6">
+                          <div className="row">
+                            <div className="col-lg-6">
                               {/* <!-- Example single danger button --> */}
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label> Name </label>
                                 <input
                                   type="name"
                                   name="name"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="name"
                                   aria-describedby="emailHelp"
                                   value={formData.name}
@@ -242,13 +242,13 @@ function Attendance() {
                                 />
                               </div>
 
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label> Date </label>
                                 <input
                                   type="text"
                                   name="date"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="date"
                                   aria-describedby="emailHelp"
                                   value={formattedDate}
@@ -258,14 +258,14 @@ function Attendance() {
                               </div>
                             </div>
 
-                            <div class="col-lg-6">
-                              <div class="form-group">
+                            <div className="col-lg-6">
+                              <div className="form-group">
                                 <label> Class </label>
                                 <input
                                   type="text"
                                   name="class"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="class"
                                   aria-describedby="emailHelp"
                                   value={formData.class}
@@ -273,13 +273,13 @@ function Attendance() {
                                   placeholder="Enter Class"
                                 />
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label> In Time </label>
                                 <input
                                   type="text"
                                   name="in_time"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="in_time"
                                   aria-describedby="emailHelp"
                                   value={currentTime}
@@ -289,15 +289,15 @@ function Attendance() {
                               </div>
                             </div>
                           </div>
-                          <div class="modal-footer">
+                          <div className="modal-footer">
                             <button
                               type="button"
-                              class="btn btn-secondary"
+                              className="btn btn-secondary"
                               data-dismiss="modal"
                             >
                               Close
                             </button>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" className="btn btn-primary">
                               Save changes
                             </button>
                           </div>
@@ -306,11 +306,11 @@ function Attendance() {
                     </div>
                   </div>
                 </div>
-                <div class="card">
-                  {/* <div class="card-header">
+                <div className="card">
+                  {/* <div className="card-header">
                     <button
                       type="button"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -318,11 +318,11 @@ function Attendance() {
                     </button>
                   </div> */}
 
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-6">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-6">
                         <select
-                          class="form-select"
+                          className="form-select"
                           aria-label="Default select example"
                           onChange={select}
                         >
@@ -333,24 +333,24 @@ function Attendance() {
                         </select>
                       </div>
                       <div
-                        class="col-6"
+                        className="col-6"
                         style={{ justifyContent: "flex-end", display: "flex" }}
                       >
                         <form
                           onSubmit={handleSubmit}
-                          class="form-inline my-2 my-lg-0"
+                          className="form-inline my-2 my-lg-0"
                         >
                           <input
                             id="Search"
                             value={searchTerm}
                             onChange={handleInputChangesearch}
-                            class="form-control mr-sm-2"
+                            className="form-control mr-sm-2"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
                           />
                           <button
-                            class="btn btn-outline-primary my-2 my-sm-0"
+                            className="btn btn-outline-primary my-2 my-sm-0"
                             type="submit"
                           >
                             Search
@@ -360,7 +360,7 @@ function Attendance() {
                     </div>
                     <table
                       id="example1"
-                      class="table table-bordered table-striped"
+                      className="table table-bordered table-striped"
                     >
                       <thead>
                         <tr>
@@ -384,12 +384,12 @@ function Attendance() {
                                 <td>{user.status}</td>
                                 <td>{user.total_fees}</td>
                                 <td>{user.date}</td>
-                                      {/* <td><button type="button" class="btn btn-primary" >
+                                      {/* <td><button type="button" className="btn btn-primary" >
                                          Edit
                                             </button></td> */}
                                 <td>
                                   <Link
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                     to={`/Add_student_fees/${user.id}`}
                                   >
                                 
@@ -436,12 +436,12 @@ function Attendance() {
                       style={{
                         justifyContent: "flex-end",
                       }}
-                      class="pagination"
+                      className="pagination"
                     >
                       {currentPage < Math.ceil(totalCount / itemsPerPage) && (
-                        <li class="page-item">
+                        <li className="page-item">
                           <button
-                            class="page-link"
+                            className="page-link"
                             onClick={() => paginate(currentPage - 1)}
                           >
                             Previous
@@ -451,9 +451,9 @@ function Attendance() {
                       {Array.from({
                         length: Math.ceil(totalCount / itemsPerPage),
                       }).map((_, index) => (
-                        <li class="page-item">
+                        <li className="page-item">
                           <button
-                            class="page-link"
+                            className="page-link"
                             onClick={() => paginate(index + 1)}
                           >
                             {index + 1}
@@ -461,9 +461,9 @@ function Attendance() {
                         </li>
                       ))}
                       {currentPage < Math.ceil(totalCount / itemsPerPage) && (
-                        <li class="page-item">
+                        <li className="page-item">
                           <button
-                            class="page-link"
+                            className="page-link"
                             onClick={() => paginate(currentPage + 1)}
                           >
                             Next
@@ -472,39 +472,39 @@ function Attendance() {
                       )}
                     </ul>
                     <div
-                      class="modal fade"
+                      className="modal fade"
                       id="webcamModal"
                       tabindex="-1"
                       role="dialog"
                       aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
                     >
-                      <div class="modal-dialog " role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
+                      <div className="modal-dialog " role="document">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">
                               Add Attendance
                             </h5>
                             <button
                               type="button"
-                              class="close"
+                              className="close"
                               data-dismiss="modal"
                               aria-label="Close"
                             >
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <div class="modal-body">
+                          <div className="modal-body">
                             <form onSubmit={handleInputChange}>
-                              <div class="row">
-                                <div class="col-lg-12">
+                              <div className="row">
+                                <div className="col-lg-12">
                                   {/* <!-- Example single danger button --> */}
-                                  <div class="form-group">
+                                  <div className="form-group">
                                     <label> Name </label>
                                     <input
                                       type="text"
                                       name="name"
-                                      class="form-control"
+                                      className="form-control"
                                       id="name"
                                       aria-describedby="emailHelp"
                                       // value={formData1.name}
@@ -513,7 +513,7 @@ function Attendance() {
                                     />
                                   </div>
 
-                                  <div class="form-group">
+                                  <div className="form-group">
                                     <label> Web cam </label>
 
                                     <WebcamComponent />
@@ -532,15 +532,15 @@ function Attendance() {
                                 <video  width={200}  height={200} ref={videoRef} autoPlay></video> */}
                                 </div>
                               </div>
-                              <div class="modal-footer">
+                              <div className="modal-footer">
                                 <button
                                   type="button"
-                                  class="btn btn-secondary"
+                                  className="btn btn-secondary"
                                   data-dismiss="modal"
                                 >
                                   Close
                                 </button>
-                                <button type="submit1" class="btn btn-primary">
+                                <button type="submit1" className="btn btn-primary">
                                   Save changes
                                 </button>
                               </div>
@@ -560,4 +560,4 @@ function Attendance() {
   );
 }
 
-export default Attendance;
+export default Viewstudents_fees;

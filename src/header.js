@@ -21,22 +21,22 @@ export default function header() {
     <>
       {/* <!-- Navbar --> */}
       <nav
-        class=" main-header navbar navbar-expand-md navbar-light navbar-dark text-right "
+        className=" main-header navbar navbar-expand-md navbar-light navbar-dark text-right "
         //  style={'margin-left: -10%'}
       >
-        {/* <!-- <nav class="main-header navbar navbar-expand-md navbar-light navbar-dark text-right"> --> */}
-        <div class="container ">
+        {/* <!-- <nav className="main-header navbar navbar-expand-md navbar-light navbar-dark text-right"> --> */}
+        <div className="container ">
           {/* <!-- <h1></h1> --> */}
-          <a href="<?php echo base_url('dashboard'); ?>" class="navbar-brand ">
-            {/* <!-- <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --> */}
+          <a href="<?php echo base_url('dashboard'); ?>" className="navbar-brand ">
+            {/* <!-- <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style="opacity: .8"> --> */}
             {/* <img width="40px" height="40px" src="<?php echo base_url('logo.jpg'); ?>" */}
-            {/* class="img-circle elevation-2" alt="User Image"> */}
+            {/* className="img-circle elevation-2" alt="User Image"> */}
 
-            {/* <!-- <span class="brand-text font-weight-light">AdminLTE 3</span> --> */}
+            {/* <!-- <span className="brand-text font-weight-light">AdminLTE 3</span> --> */}
           </a>
 
           <button
-            class="navbar-toggler order-1"
+            className="navbar-toggler order-1"
             type="button"
             data-toggle="collapse"
             data-target="#navbarCollapse"
@@ -44,122 +44,122 @@ export default function header() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
 
           <div
-            class=" row collapse navbar-collapse order-3"
+            className=" row collapse navbar-collapse order-3"
             id="navbarCollapse"
           >
-            <ul class="navbar-nav">
-              <li class="nav-item ">
-                <Link to="/dashbord" class="nav-link text-white">
+            <ul className="navbar-nav">
+              <li className="nav-item ">
+                <Link to="/dashbord" className="nav-link text-white">
                   Home{" "}
                 </Link>
               </li>
-              {/* <li class="nav-item"><Link class="nav-link px-lg-3 py-3 py-lg-4" to="/Home">Home</Link></li> */}
+              {/* <li className="nav-item"><Link className="nav-link px-lg-3 py-3 py-lg-4" to="/Home">Home</Link></li> */}
 
-              <li class="nav-item">
-                <a href="" class="nav-link text-white">
+              <li className="nav-item">
+                <a href="" className="nav-link text-white">
                   Name : {retrievedArray.user_name}
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="" class="nav-link text-white">
+              <li className="nav-item">
+                <a href="" className="nav-link text-white">
                   Role : {retrievedArray.user_role}
                 </a>
               </li>
 
-              {/* <li class="dropdown-submenu dropdown-hover">
+              {/* <li className="dropdown-submenu dropdown-hover">
                             <Link id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" class="nav-link dropdown-toggle">Master</Link>
-                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                aria-expanded="false" className="nav-link dropdown-toggle">Master</Link>
+                            <ul aria-labelledby="dropdownSubMenu1" className="dropdown-menu border-0 shadow">
 
-                                <li><Link to="/employee_type" class="dropdown-item">
+                                <li><Link to="/employee_type" className="dropdown-item">
                                        Employee Type</Link></li>
                              
                         
 
                             </ul>
                         </li> */}
-              <li class="nav-item">
-                <Link to="/addAttendance" class="nav-link">
+              <li className="nav-item">
+                <Link to="/addAttendance" className="nav-link">
                   <p>Attendance</p>
                 </Link>
               </li>
 
               {retrievedArray.user_role === "admin" && (
-                <li id="user" class="nav-item">
-                  <Link to="/addusers" class="nav-link">
+                <li id="user" className="nav-item">
+                  <Link to="/addusers" className="nav-link">
                     <p>Users</p>
                   </Link>
                 </li>
               )}
                {retrievedArray.user_role === "admin" && (
-                <li id="user" class="nav-item">
-                  <Link to="/Viewstudents_fees" class="nav-link">
+                <li id="user" className="nav-item">
+                  <Link to="/Viewstudents_fees" className="nav-link">
                     <p>Students</p>
                   </Link>
                 </li>
               )}
                {retrievedArray.user_role === "admin" && (
-                <li id="user" class="nav-item">
-                  <Link to="/View_student_installment_fees" class="nav-link">
+                <li id="user" className="nav-item">
+                  <Link to="/View_student_installment_fees" className="nav-link">
                     <p>Fees</p>
                   </Link>
                 </li>
               )}
               {(retrievedArray.user_role === "admin" ||
                 retrievedArray.user_role === "trainer") && (
-                <li class="nav-item">
-                  <Link to="/addbatches" class="nav-link">
+                <li className="nav-item">
+                  <Link to="/addbatches" className="nav-link">
                     <p>Batches</p>
                   </Link>
                 </li>
               )}
               {(retrievedArray.user_role === "admin" ||
                 retrievedArray.user_role === "trainer") && (
-                <li class="nav-item">
-                  <Link to="/addassignment" class="nav-link">
+                <li className="nav-item">
+                  <Link to="/addassignment" className="nav-link">
                     <p>Assignment</p>
                   </Link>
                 </li>
               )}
               {retrievedArray.user_role === "student" && (
-                <li class="nav-item">
-                  <Link to="/ViewMyAssignment" class="nav-link">
+                <li className="nav-item">
+                  <Link to="/ViewMyAssignment" className="nav-link">
                     <p>My Assignment</p>
                   </Link>
                 </li>
               )}
               {retrievedArray.user_role === "student" && (
-                <li class="nav-item">
-                  <Link to="/ViewUploadedassignment" class="nav-link">
+                <li className="nav-item">
+                  <Link to="/ViewUploadedassignment" className="nav-link">
                     <p>Uploaded Assignment</p>
                   </Link>
                 </li>
               )}
               {(retrievedArray.user_role === "admin" ||
                 retrievedArray.user_role === "trainer") && (
-                <li class="nav-item">
-                  <Link to="/ViewStudentAssign" class="nav-link">
+                <li className="nav-item">
+                  <Link to="/ViewStudentAssign" className="nav-link">
                     <p>Student Submissions</p>
                   </Link>
                 </li>
               )}
-              {/* <li class="nav-item">
-                <Link to="/registerstudent" class="nav-link">
+              {/* <li className="nav-item">
+                <Link to="/registerstudent" className="nav-link">
                   <p>Register Student</p>
                 </Link>
               </li> */}
-              <li class="nav-item">
-                <Link to="/" class="nav-link">
+              <li className="nav-item">
+                <Link to="/" className="nav-link">
                   <p>Log out</p>
                 </Link>
               </li>
 
-              {/* <!-- <li class="nav-item">
-                            <a href="<?php echo base_url('open_task'); ?>" class="nav-link">
+              {/* <!-- <li className="nav-item">
+                            <a href="<?php echo base_url('open_task'); ?>" className="nav-link">
 
                                 <p>
 
@@ -176,7 +176,7 @@ export default function header() {
                             ?> */}
 
               {/* <li>
-                            <a href="<?php echo base_url('logout'); ?>" class="nav-link">Logout </a>
+                            <a href="<?php echo base_url('logout'); ?>" className="nav-link">Logout </a>
 
                         </li> */}
 

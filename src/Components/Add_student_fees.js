@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function Updateusers() {
+function Add_student_fees() {
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -31,11 +31,13 @@ function Updateusers() {
     });
   };
   const [option, setoption] = useState([]);
+  const [Data, setData] = useState([]);
+
   // const password = option[0];
   //   const password1 = password.email;
   //   console.log("password", password1);
   //   const [formData, setFormData] = useState([])
-  //console.log(password.email);
+  // console.log("5555", option);
   const [formData, setFormData] = useState({
     id: "",
     student_name: "",
@@ -45,6 +47,7 @@ function Updateusers() {
     installment_fees: "",
     fees_type: "",
     description: "",
+    user_id: "",
   });
   //console.log("d",formData);
 
@@ -63,12 +66,14 @@ function Updateusers() {
         if (response1.data && response1.data.data) {
           setoption(response1.data.data);
         }
+        // console.log("242444", response1.data.data);
+
         const record_data = response1.data.data[0];
         setFormData({
           ...formData,
 
           student_name: record_data.user_name,
-
+          user_id: record_data.id,
           total_fees: record_data.total_fees,
         });
         //console.log("record_data",record_data);
@@ -81,6 +86,40 @@ function Updateusers() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // setLoading(true);
+        // Make a GET request to the API endpoint
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/student/search_view_installment_fees`,
+          {
+            params: {
+              // id: searchTerm,
+              // currentPage: currentPage,
+              // input: input,
+            },
+          }
+        );
+        console.log("response", response.data.data);
+        if (response.data && response.data.data) {
+          setData(response.data.data);
+
+          //  setTotalCount(response.data.user_count);
+        }
+        console.log(".....", response.data.data);
+
+        // setLoading(false);
+      } catch (error) {
+        // Handle errors
+        // setError(error.message);
+        // setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, []);
   // Function to handle form input changes
   const handleInputChange = (event, imageData) => {
     const { name, value } = event.target;
@@ -109,7 +148,7 @@ function Updateusers() {
 
     // Pass formData to another function
     submitFormData(formData);
-    console.log("formData24", formData);
+    console.log("formData24&&", formData);
     navigate("/View_student_installment_fees");
   };
 
@@ -122,17 +161,17 @@ function Updateusers() {
   return (
     <>
       <div>
-        <div class="">
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Add Fees </h1>
+        <div className="">
+          <div className="content-header">
+            <div className="container-fluid">
+              <div className="row mb-2">
+                <div className="col-sm-6">
+                  <h1 className="m-0 text-dark">Add Fees </h1>
                 </div>
 
-                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
+                <div className="col-sm-6">
+                  <ol className="breadcrumb float-sm-right">
+                    <li className="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -140,77 +179,92 @@ function Updateusers() {
               </div>
             </div>
           </div>
-          {/* <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link to="/viewusers" type="button" class="btn btn-primary">
+          {/* <div className="card-header1 " style={{ marginLeft: "15px" }}>
+            <Link to="/viewusers" type="button" className="btn btn-primary">
               {" "}
               View Users{" "}
             </Link>
           </div> */}
-          <section class="content">
+          <section className="content">
             <div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="row">
-                    <div class="col-lg-4 ml-3"></div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="row">
+                    <div className="col-lg-4 ml-3"></div>
                   </div>
 
                   <div
-                    class="modal123 fade123"
+                    className="modal123 fade123"
                     id="exampleModal"
                     tabindex="-1"
                     role="dialog"
                     aria-labelledby="exampleModalLabel1"
                     aria-hidden="true"
                   >
-                    <div class="modal-dialog1 " role="document">
-                      <div class="modal-content1">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"></h5>
-                          {/* <button type="button" class="close" data-dismiss="modal"
+                    <div className="modal-dialog1 " role="document">
+                      <div className="modal-content1">
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="exampleModalLabel"
+                          ></h5>
+                          {/* <button type="button" className="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button> */}
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                           <form onSubmit={handleAttendanceSubmit}>
-                            <div class="row">
-                              <div class="col-lg-6">
+                            <div className="row">
+                              <div className="col-lg-6">
                                 {/* <!-- Example single danger button --> */}
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> User Name </label>
                                   <input
                                     type="name"
                                     name="student_name"
                                     readOnly
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="student_name"
                                     aria-describedby="emailHelp"
                                     value={formData.student_name}
                                     onChange={handleInputChange}
                                     placeholder="Enter Name"
                                   />
+                                  <input
+                                    type="hidden"
+                                    name="user_id"
+                                    readOnly
+                                    required
+                                    className="form-control"
+                                    id="user_id"
+                                    aria-describedby="emailHelp"
+                                    value={formData.user_id}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Name"
+                                  />
                                 </div>
-                                {/* <div class="form-group">
+                                {/* <div className="form-group">
                                   <label> Password </label>
                                   <input
                                     type="text"
                                     name="user_password"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_password"
                                     aria-describedby="emailHelp"
                                     value={formData.user_password}
                                     onChange={handleInputChange}
                                     placeholder="Enter Class"
                                   /> */}
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Installment Fees </label>
                                   <input
                                     type="text"
                                     name="installment_fees"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="installment_fees"
                                     aria-describedby="emailHelp"
                                     value={formData.installment_fees}
@@ -218,12 +272,12 @@ function Updateusers() {
                                     placeholder="Enter Class"
                                   />
                                 </div>
-                                {/* <div class="form-group">
+                                {/* <div className="form-group">
                                   <label> Active/Inactive </label>
                                   <br />
                                   <select
                                     // name="status"
-                                    class="form-control"
+                                    className="form-control"
                                     id="status"
                                     value={formData.status}
                                     onChange={handleStatusChange}
@@ -232,13 +286,13 @@ function Updateusers() {
                                     <option value="inactive">Inactive</option>
                                   </select>
                                 </div> */}
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Fees Type </label>
                                   <input
                                     type="text"
                                     name="fees_type"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="fees_type"
                                     aria-describedby="emailHelp"
                                     value={formData.fees_type}
@@ -248,15 +302,15 @@ function Updateusers() {
                                 </div>
                               </div>
 
-                              <div class="col-lg-6">
-                                <div class="form-group">
+                              <div className="col-lg-6">
+                                <div className="form-group">
                                   <label> Total Fees </label>
                                   <input
                                     type="text"
                                     name="email"
                                     readOnly
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_password"
                                     aria-describedby="emailHelp"
                                     value={formData.total_fees}
@@ -268,7 +322,7 @@ function Updateusers() {
                                     type="hidden"
                                     name="create_time"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="create_time"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -281,7 +335,7 @@ function Updateusers() {
                                     type="hidden"
                                     name="create_date"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="create_date"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -292,15 +346,15 @@ function Updateusers() {
                                 </div>
                                 <div></div>
 
-                                {/* <div class="form-group">
+                                {/* <div className="form-group">
                                   <label for="on click url">
                                     Select Role
-                                    <span class="text-danger">*</span>
+                                    <span className="text-danger">*</span>
                                   </label>
                                   <br />
                                   <select
                                     name="user_role"
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_role"
                                     value={formData.user_role}
                                     onChange={handleSelectChange}
@@ -312,13 +366,13 @@ function Updateusers() {
                                 <div>
                                   <label for="on click url">
                                     Description
-                                    <span class="text-danger">*</span>
+                                    <span className="text-danger">*</span>
                                   </label>
                                   <input
                                     type="text"
                                     name="description"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="description"
                                     aria-describedby="emailHelp"
                                     value={formData.description}
@@ -328,8 +382,8 @@ function Updateusers() {
                                 </div>
                               </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="modal-footer">
+                              <button type="submit" className="btn btn-primary">
                                 Save changes
                               </button>
                             </div>
@@ -338,11 +392,11 @@ function Updateusers() {
                       </div>
                     </div>
                   </div>
-                  <div class="card123">
-                    {/* <div class="card-header">
+                  <div className="card123">
+                    {/* <div className="card-header">
                     <button
                       type="button"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -350,10 +404,10 @@ function Updateusers() {
                     </button>
                   </div> */}
 
-                    <div class="card-body">
+                    <div className="card-body">
                       <table
                         id="example1"
-                        class="table table-bordered table-striped"
+                        className="table table-bordered table-striped"
                       >
                         {/* <thead>
                         <tr>
@@ -377,7 +431,7 @@ function Updateusers() {
                           <td>
                               <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                              className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -394,7 +448,7 @@ function Updateusers() {
                           <td>
                           <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                              className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -405,39 +459,42 @@ function Updateusers() {
                         </tbody>
                       </table>
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="webcamModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog " role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
+                        <div className="modal-dialog " role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLabel"
+                              >
                                 Add Attendance
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                               >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <form onSubmit={handleInputChange}>
-                                <div class="row">
-                                  <div class="col-lg-12">
+                                <div className="row">
+                                  <div className="col-lg-12">
                                     {/* <!-- Example single danger button --> */}
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Name </label>
                                       <input
                                         type="text"
                                         name="name"
-                                        class="form-control"
+                                        className="form-control"
                                         id="name"
                                         aria-describedby="emailHelp"
                                         // value={formData1.name}
@@ -446,7 +503,7 @@ function Updateusers() {
                                       />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Web cam </label>
 
                                       <WebcamComponent />
@@ -465,17 +522,17 @@ function Updateusers() {
                                 <video  width={200}  height={200} ref={videoRef} autoPlay></video> */}
                                   </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div className="modal-footer">
                                   <button
                                     type="button"
-                                    class="btn btn-secondary"
+                                    className="btn btn-secondary"
                                     data-dismiss="modal"
                                   >
                                     Close
                                   </button>
                                   <button
                                     type="submit1"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                   >
                                     Save changes
                                   </button>
@@ -497,4 +554,4 @@ function Updateusers() {
   );
 }
 
-export default Updateusers;
+export default Add_student_fees;

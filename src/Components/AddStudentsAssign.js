@@ -217,17 +217,17 @@ function AddStudentsAssign({ streamId }) {
   return (
     <>
       <div>
-        <div class="">
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Submission</h1>
+        <div className="">
+          <div className="content-header">
+            <div className="container-fluid">
+              <div className="row mb-2">
+                <div className="col-sm-6">
+                  <h1 className="m-0 text-dark">Submission</h1>
                 </div>
 
-                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
+                <div className="col-sm-6">
+                  <ol className="breadcrumb float-sm-right">
+                    <li className="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -235,49 +235,49 @@ function AddStudentsAssign({ streamId }) {
               </div>
             </div>
           </div>
-          <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            <Link to="/ViewStudentAssign" type="button" class="btn btn-primary">
+          <div className="card-header1 " style={{ marginLeft: "15px" }}>
+            <Link to="/ViewStudentAssign" type="button" className="btn btn-primary">
               {" "}
               View Assignment{" "}
             </Link>
           </div>
-          <section class="content">
+          <section className="content">
             <div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="row">
-                    <div class="col-lg-4 ml-3"></div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="row">
+                    <div className="col-lg-4 ml-3"></div>
                   </div>
 
                   <div
-                    class="modal123 fade123"
+                    className="modal123 fade123"
                     id="exampleModal"
                     tabindex="-1"
                     role="dialog"
                     aria-labelledby="exampleModalLabel1"
                     aria-hidden="true"
                   >
-                    <div class="modal-dialog1 " role="document">
-                      <div class="modal-content1">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"></h5>
-                          {/* <button type="button" class="close" data-dismiss="modal"
+                    <div className="modal-dialog1 " role="document">
+                      <div className="modal-content1">
+                        <div className="modal-header">
+                          <h5 className="modal-title" id="exampleModalLabel"></h5>
+                          {/* <button type="button" className="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button> */}
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                           <form onSubmit={handleAttendanceSubmit}>
-                            <div class="row">
-                              <div class="col-lg-6">
+                            <div className="row">
+                              <div className="col-lg-6">
                                 {/* <!-- Example single danger button --> */}
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Assignment Name </label>
                                   <input
                                     type="text"
                                     name="assignment_name"
                                     readOnly
-                                    class="form-control"
+                                    className="form-control"
                                     id="assignment_name"
                                     aria-describedby="emailHelp"
                                     value={formData.assignment_name}
@@ -286,7 +286,7 @@ function AddStudentsAssign({ streamId }) {
                                   />
                                   {/* <select
                                     name="assignment_name"
-                                    class="form-control"
+                                    className="form-control"
                                     id="assignment_name"
                                     value={formData.assignment_name}
                                     onChange={handleSelectChangeassignment}
@@ -305,13 +305,13 @@ function AddStudentsAssign({ streamId }) {
                                     {/* <option value="inactive">Inactive</option> */}
                                   {/* </select> */}
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Batch </label>
                                   <input
                                     type="text"
                                     name="batch_name"
                                     readOnly
-                                    class="form-control"
+                                    className="form-control"
                                     id="batch_name"
                                     aria-describedby="emailHelp"
                                     value={formData.batch_name}
@@ -320,7 +320,7 @@ function AddStudentsAssign({ streamId }) {
                                   />
                                   {/* <select
                                     name="batch_name"
-                                    class="form-control"
+                                    className="form-control"
                                     id="batch_name"
                                     value={formData.batch_name}
                                     onChange={handleSelectChangebatch}
@@ -339,12 +339,12 @@ function AddStudentsAssign({ streamId }) {
                                     {/* <option value="inactive">Inactive</option> */}
                                   {/* </select> */}
                                 </div>
-                                {/* <div class="form-group">
+                                {/* <div className="form-group">
                                   <label> Active/Inactive </label>
                                   <br />
                                   <select
                                     name="batch_status"
-                                    class="form-control"
+                                    className="form-control"
                                     id="batch_status"
                                     value={formData.batch_status}
                                     onChange={handleSelectChange}
@@ -355,13 +355,13 @@ function AddStudentsAssign({ streamId }) {
                                   </select>
                                 </div> */}
 
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Upload Assignment URL </label>
                                   <input
                                     type="text"
                                     name="upload_url"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="upload_url"
                                     aria-describedby="emailHelp"
                                     value={formData.upload_url}
@@ -371,14 +371,14 @@ function AddStudentsAssign({ streamId }) {
                                 </div>
                               </div>
 
-                              <div class="col-lg-5">
-                                <div class="form-group">
+                              <div className="col-lg-5">
+                                <div className="form-group">
                                   <label> Assignment Description </label>
                                   <input
                                     type="text"
                                     name="assignment_description"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="description"
                                     aria-describedby="emailHelp"
                                     value={formData.class}
@@ -390,7 +390,7 @@ function AddStudentsAssign({ streamId }) {
                                     type="hidden"
                                     name="create_time"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="create_time"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -403,7 +403,7 @@ function AddStudentsAssign({ streamId }) {
                                     type="hidden"
                                     name="create_date"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="create_date"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -416,7 +416,7 @@ function AddStudentsAssign({ streamId }) {
                                     type="hidden"
                                     name="trainer_remark"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="trainer_remark"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -429,7 +429,7 @@ function AddStudentsAssign({ streamId }) {
                                     type="hidden"
                                     name="remark_description"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="remark_description"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -441,7 +441,7 @@ function AddStudentsAssign({ streamId }) {
                                     type="hidden"
                                     name="user_id"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_id"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -452,17 +452,17 @@ function AddStudentsAssign({ streamId }) {
                                 </div>
                                 <div></div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label for="on click url">
                                     Trainer Name
-                                    <span class="text-danger">*</span>
+                                    <span className="text-danger">*</span>
                                   </label>
                                   <br />
                                   <input
                                     type="text"
                                     name="trainer_name"
                                     readOnly
-                                    class="form-control"
+                                    className="form-control"
                                     id="trainer_name"
                                     aria-describedby="emailHelp"
                                     value={formData.trainer_name}
@@ -471,7 +471,7 @@ function AddStudentsAssign({ streamId }) {
                                   />
                                   {/* <select
                                     name="trainer_name"
-                                    class="form-control"
+                                    className="form-control"
                                     id="trainer_name"
                                     value={formData.trainer_name}
                                     onChange={handleSelectChangeTrainer}
@@ -492,13 +492,13 @@ function AddStudentsAssign({ streamId }) {
 
                                   <div></div>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Student Name </label>
                                   <input
                                     type="text"
                                     name="student_name"
                                     readOnly
-                                    class="form-control"
+                                    className="form-control"
                                     id="student_name"
                                     aria-describedby="emailHelp"
                                     value={formData.student_name}
@@ -506,18 +506,18 @@ function AddStudentsAssign({ streamId }) {
                                     placeholder="Enter Class"
                                   />
                                 </div>
-                                {/* <div class="row">
-                                  <div class="form-group col-lg-6">
+                                {/* <div className="row">
+                                  <div className="form-group col-lg-6">
                                     <label for="on click url">
                                       Start Date
-                                      <span class="text-danger">*</span>
+                                      <span className="text-danger">*</span>
                                     </label>
                                     <br />
                                     <input
                                       type="date"
                                       name="start_date"
                                       required
-                                      class="form-control"
+                                      className="form-control"
                                       id="start_date"
                                       aria-describedby="emailHelp"
                                       value={formData.class}
@@ -525,17 +525,17 @@ function AddStudentsAssign({ streamId }) {
                                       placeholder="Enter Class"
                                     />
                                   </div>
-                                  <div class="form-group col-lg-6">
+                                  <div className="form-group col-lg-6">
                                     <label for="on click url">
                                       End Date
-                                      <span class="text-danger">*</span>
+                                      <span className="text-danger">*</span>
                                     </label>
                                     <br />
                                     <input
                                       type="date"
                                       name="end_date"
                                       required
-                                      class="form-control"
+                                      className="form-control"
                                       id="end_date"
                                       aria-describedby="emailHelp"
                                       value={formData.class}
@@ -546,8 +546,8 @@ function AddStudentsAssign({ streamId }) {
                                 </div> */}
                               </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="modal-footer">
+                              <button type="submit" className="btn btn-primary">
                                 Save changes
                               </button>
                             </div>
@@ -556,11 +556,11 @@ function AddStudentsAssign({ streamId }) {
                       </div>
                     </div>
                   </div>
-                  <div class="card123">
-                    {/* <div class="card-header">
+                  <div className="card123">
+                    {/* <div className="card-header">
                     <button
                       type="button"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -568,10 +568,10 @@ function AddStudentsAssign({ streamId }) {
                     </button>
                   </div> */}
 
-                    <div class="card-body">
+                    <div className="card-body">
                       <table
                         id="example1"
-                        class="table table-bordered table-striped"
+                        className="table table-bordered table-striped"
                       >
                         {/* <thead>
                         <tr>
@@ -595,7 +595,7 @@ function AddStudentsAssign({ streamId }) {
                           <td>
                               <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                              className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -612,7 +612,7 @@ function AddStudentsAssign({ streamId }) {
                           <td>
                           <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                              className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -623,39 +623,39 @@ function AddStudentsAssign({ streamId }) {
                         </tbody>
                       </table>
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="webcamModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog " role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
+                        <div className="modal-dialog " role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title" id="exampleModalLabel">
                                 Add Attendance
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                               >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <form onSubmit={handleInputChange}>
-                                <div class="row">
-                                  <div class="col-lg-12">
+                                <div className="row">
+                                  <div className="col-lg-12">
                                     {/* <!-- Example single danger button --> */}
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Name </label>
                                       <input
                                         type="text"
                                         name="name"
-                                        class="form-control"
+                                        className="form-control"
                                         id="name"
                                         aria-describedby="emailHelp"
                                         // value={formData1.name}
@@ -664,7 +664,7 @@ function AddStudentsAssign({ streamId }) {
                                       />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Web cam </label>
 
                                       <WebcamComponent />
@@ -683,17 +683,17 @@ function AddStudentsAssign({ streamId }) {
                                 <video  width={200}  height={200} ref={videoRef} autoPlay></video> */}
                                   </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div className="modal-footer">
                                   <button
                                     type="button"
-                                    class="btn btn-secondary"
+                                    className="btn btn-secondary"
                                     data-dismiss="modal"
                                   >
                                     Close
                                   </button>
                                   <button
                                     type="submit1"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                   >
                                     Save changes
                                   </button>

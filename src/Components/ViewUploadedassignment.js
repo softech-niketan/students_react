@@ -7,16 +7,13 @@ import { Link, useParams } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function ViewStudentAssign() {
+function ViewUploadedassignment() {
   const { id } = useParams();
 
   const currentTime = moment().format("HH:mm:ss");
   const currentDate = new Date();
   const formattedDate = moment(currentDate).format("DD/MM/YYYY");
 
-
-
-  
   const [searchTerm, setSearchTerm] = useState("");
   const [totalCount, setTotalCount] = useState(0);
 
@@ -195,7 +192,6 @@ function ViewStudentAssign() {
     fetchData();
   };
 
-
   const [currentPage, setCurrentPage] = useState(1);
 
   console.log("currentPage", currentPage);
@@ -247,7 +243,6 @@ function ViewStudentAssign() {
           setTotalCount(response.data.totalCount);
           //console.log(response.data.data);
         }
-      
 
         setLoading(false);
       } catch (error) {
@@ -262,17 +257,17 @@ function ViewStudentAssign() {
   }, [currentPage, searchTerm, input]);
   return (
     <div>
-      <div class="">
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Uploaded Assignment </h1>
+      <div className="">
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1 className="m-0 text-dark">Uploaded Assignment </h1>
               </div>
 
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item">
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
                     <Link to="/dashbord">Home</Link>
                   </li>
                 </ol>
@@ -281,46 +276,46 @@ function ViewStudentAssign() {
           </div>
         </div>
 
-        <section class="content">
+        <section className="content">
           <div>
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="row">
-                  <div class="col-lg-4 ml-3"></div>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-4 ml-3"></div>
                 </div>
 
                 <div
-                  class="modal fade"
+                  className="modal fade"
                   id="exampleModal"
                   tabindex="-1"
                   role="dialog"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
                 >
-                  <div class="modal-dialog " role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
+                  <div className="modal-dialog " role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">
                           Update
                         </h5>
                         <button
                           type="button"
-                          class="close"
+                          className="close"
                           data-dismiss="modal"
                           aria-label="Close"
                         >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">
+                      <div className="modal-body">
                         <form onSubmit={handleAttendanceSubmit}>
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <div class="form-group">
+                          <div className="row">
+                            <div className="col-lg-12">
+                              <div className="form-group">
                                 <label> Trainer Remark</label>
                                 <select
                                   name="trainer_remark"
-                                  class="form-control"
+                                  className="form-control"
                                   id="trainer_remark"
                                   value={formData.trainer_remark}
                                   onChange={handleInputChange}
@@ -329,12 +324,12 @@ function ViewStudentAssign() {
                                   <option value="complete">Complete</option>
                                 </select>
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label>Remark Description </label>
                                 <input
                                   type="text"
                                   name="remark_description"
-                                  class="form-control"
+                                  className="form-control"
                                   id="remark_description"
                                   aria-describedby="emailHelp"
                                   value={formData.remark_description}
@@ -344,13 +339,13 @@ function ViewStudentAssign() {
                               </div>
 
                               {/* <!-- Example single danger button --> */}
-                              <div class="form-group">
+                              <div className="form-group">
                                 {/* <label> Assignment Name </label> */}
                                 <input
                                   type="hidden"
                                   name="assignment_name"
                                   readOnly
-                                  class="form-control"
+                                  className="form-control"
                                   id="assignment_name"
                                   aria-describedby="emailHelp"
                                   value={formData.assignment_name}
@@ -358,13 +353,13 @@ function ViewStudentAssign() {
                                   placeholder="Enter Class"
                                 />
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 {/* <label> Batch </label> */}
                                 <input
                                   type="hidden"
                                   name="batch_name"
                                   readOnly
-                                  class="form-control"
+                                  className="form-control"
                                   id="batch_name"
                                   aria-describedby="emailHelp"
                                   value={formData.batch_name}
@@ -373,13 +368,13 @@ function ViewStudentAssign() {
                                 />
                               </div>
 
-                              <div class="form-group">
+                              <div className="form-group">
                                 {/* <label> Upload Assignment URL </label> */}
                                 <input
                                   type="hidden"
                                   name="upload_url"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="upload_url"
                                   aria-describedby="emailHelp"
                                   value={formData.upload_url}
@@ -389,14 +384,14 @@ function ViewStudentAssign() {
                               </div>
                             </div>
 
-                            <div class="col-lg-12">
-                              <div class="form-group">
+                            <div className="col-lg-12">
+                              <div className="form-group">
                                 {/* <label> Assignment Description </label> */}
                                 <input
                                   type="hidden"
                                   name="assignment_description"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="description"
                                   aria-describedby="emailHelp"
                                   value={formData.assignment_description}
@@ -408,7 +403,7 @@ function ViewStudentAssign() {
                                   type="hidden"
                                   name="create_time"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="create_time"
                                   aria-describedby="emailHelp"
                                   // value={currentTime}
@@ -421,7 +416,7 @@ function ViewStudentAssign() {
                                   type="hidden"
                                   name="create_date"
                                   required
-                                  class="form-control"
+                                  className="form-control"
                                   id="create_date"
                                   aria-describedby="emailHelp"
                                   // value={currentTime}
@@ -432,17 +427,17 @@ function ViewStudentAssign() {
                               </div>
                               <div></div>
 
-                              <div class="form-group">
+                              <div className="form-group">
                                 {/* <label for="on click url">
                                   Trainer Name
-                                  <span class="text-danger">*</span>
+                                  <span className="text-danger">*</span>
                                 </label> */}
                                 <br />
                                 <input
                                   type="hidden"
                                   name="trainer_name"
                                   readOnly
-                                  class="form-control"
+                                  className="form-control"
                                   id="trainer_name"
                                   aria-describedby="emailHelp"
                                   value={formData.trainer_name}
@@ -452,13 +447,13 @@ function ViewStudentAssign() {
 
                                 <div></div>
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 {/* <label> Student Name </label> */}
                                 <input
                                   type="hidden"
                                   name="student_name"
                                   readOnly
-                                  class="form-control"
+                                  className="form-control"
                                   id="student_name"
                                   aria-describedby="emailHelp"
                                   value={formData.student_name}
@@ -470,17 +465,17 @@ function ViewStudentAssign() {
                           </div>
 
                           <div
-                            class="modal-footer"
+                            className="modal-footer"
                             style={{ marginTop: "-36px" }}
                           >
                             <button
                               type="button"
-                              class="btn btn-secondary"
+                              className="btn btn-secondary"
                               data-dismiss="modal"
                             >
                               Close
                             </button>
-                            <button type="submit" class="btn btn-primary ">
+                            <button type="submit" className="btn btn-primary ">
                               Save changes
                             </button>
                           </div>
@@ -489,14 +484,12 @@ function ViewStudentAssign() {
                     </div>
                   </div>
                 </div>
-                <div class="card">
-                
-                  <div class="card-body">
-
-                  <div class="row">
-                      <div class="col-6">
+                <div className="card">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-6">
                         <select
-                          class="form-select"
+                          className="form-select"
                           aria-label="Default select example"
                           onChange={select}
                         >
@@ -507,24 +500,24 @@ function ViewStudentAssign() {
                         </select>
                       </div>
                       <div
-                        class="col-6"
+                        className="col-6"
                         style={{ justifyContent: "flex-end", display: "flex" }}
                       >
                         <form
                           onSubmit={handleSubmit}
-                          class="form-inline my-2 my-lg-0"
+                          className="form-inline my-2 my-lg-0"
                         >
                           <input
                             id="Search"
                             value={searchTerm}
                             onChange={handleInputChangesearch}
-                            class="form-control mr-sm-2"
+                            className="form-control mr-sm-2"
                             type="search"
                             placeholder="Search....."
                             aria-label="Search"
                           />
                           {/* <button
-                            class="btn btn-outline-primary my-2 my-sm-0"
+                            className="btn btn-outline-primary my-2 my-sm-0"
                             type="submit"
                           >
                             Search
@@ -535,7 +528,7 @@ function ViewStudentAssign() {
 
                     <table
                       id="example1"
-                      class="table table-bordered table-striped"
+                      className="table table-bordered table-striped"
                     >
                       <thead>
                         <tr>
@@ -577,7 +570,7 @@ function ViewStudentAssign() {
                                   <button
                                     //  style={{ marginRight: "10px" }}
                                     type="button"
-                                    class="btn btn-primary btn-sm"
+                                    className="btn btn-primary btn-sm"
                                     data-toggle="modal"
                                     data-target="#exampleModal"
                                     onClick={() => completeTask(`${user.id}`)}
@@ -591,7 +584,7 @@ function ViewStudentAssign() {
                                   {user.trainer_remark === "complete" && (
                                     <button
                                       type="button"
-                                      class="btn btn-success btn-sm"
+                                      className="btn btn-success btn-sm"
                                     >
                                       Approved
                                     </button>
@@ -599,7 +592,7 @@ function ViewStudentAssign() {
                                   {user.trainer_remark === "pending" && (
                                     <button
                                       type="button"
-                                      class="btn btn-danger btn-sm"
+                                      className="btn btn-danger btn-sm"
                                     >
                                       Incomplete
                                     </button>
@@ -607,7 +600,7 @@ function ViewStudentAssign() {
                                   {user.trainer_remark === "notcheck" && (
                                     <button
                                       type="button"
-                                      class="btn btn-warning btn-sm"
+                                      className="btn btn-warning btn-sm"
                                     >
                                       Not check
                                     </button>
@@ -624,13 +617,12 @@ function ViewStudentAssign() {
                       style={{
                         justifyContent: "flex-end",
                       }}
-                      class="pagination"
+                      className="pagination"
                     >
-                      {currentPage <
-                        Math.ceil(totalCount / itemsPerPage) && (
-                        <li class="page-item">
+                      {currentPage < Math.ceil(totalCount / itemsPerPage) && (
+                        <li className="page-item">
                           <button
-                            class="page-link"
+                            className="page-link"
                             onClick={() => paginate(currentPage - 1)}
                           >
                             Previous
@@ -640,9 +632,9 @@ function ViewStudentAssign() {
                       {Array.from({
                         length: Math.ceil(totalCount / itemsPerPage),
                       }).map((_, index) => (
-                        <li class="page-item">
+                        <li className="page-item">
                           <button
-                            class="page-link"
+                            className="page-link"
                             onClick={() => paginate(index + 1)}
                           >
                             {index + 1}
@@ -650,9 +642,9 @@ function ViewStudentAssign() {
                         </li>
                       ))}
                       {currentPage < Math.ceil(totalCount / itemsPerPage) && (
-                        <li class="page-item">
+                        <li className="page-item">
                           <button
-                            class="page-link"
+                            className="page-link"
                             onClick={() => paginate(currentPage + 1)}
                           >
                             Next
@@ -671,4 +663,4 @@ function ViewStudentAssign() {
   );
 }
 
-export default ViewStudentAssign;
+export default ViewUploadedassignment;

@@ -3,111 +3,65 @@ import React, { useState, useEffect } from "react";
 
 // import Webcam from "react-webcam";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function DeleteButton({ recordId, onDelete }) {
-  const handleDelete = async () => {
-    try {
-    
-      // Make DELETE request to delete the record with recordId
-      await axios.delete(
-        `http://localhost:8080/api/v1/student/delete/${recordId}`
-      );
-      // If deletion is successful, trigger the onDelete callback
-      onDelete(recordId);
-       window.location.reload();
-    } catch (error) {
-      console.error("Failed to delete record:", error);
-    }
-  };
+function View_students_installment_history() {
+  const { id } = useParams();
 
-
-  return <button type="button" onClick={handleDelete} className="btn btn-danger">Delete</button>;
-}
-
-function RegisterStudent() {
-  const [user, setUser] = useState([]);
-
-
-
-
-
-
-
-  const handleDelete = (deletedRecordId) => {
-    // Filter out the deleted record from the records array
-    const updatedRecords = user.filter((user) => user.id !== deletedRecordId);
-    setUser(updatedRecords);
-  };
-  // const [data, setData] = useState({
-  //   image: "",
-
-  // });
-  // const videoRef = useRef(null);
-
-  // const startWebcam = async (e) => {
-  //   try {
-  //     e.preventDefault();
-  //     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  //     videoRef.current.srcObject = stream;
-  //   } catch (error) {
-  //     console.error('Error accessing webcam:', error);
-  //   }
-  // };
-
-  // const webcamRef = useRef(null);
-
-  // // Function to capture an image
-  // const capture = (e) => {
-  //   e.preventDefault();
-  //   const imageSrc = webcamRef.current.getScreenshot();
-  //   setData({
-  //     image: imageSrc,
-  //   });
-  //   console.log("image", imageSrc); // Use imageSrc as needed, such as saving or displaying the image
-  // };
+  var retrievedArray = JSON.parse(localStorage.getItem("user_data"));
 
   const currentTime = moment().format("HH:mm:ss");
   const currentDate = new Date();
   const formattedDate = moment(currentDate).format("DD/MM/YYYY");
 
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const [totalCount, setTotalCount] = useState(0);
+  console.log("totalCount", totalCount);
+
+  const [input, setinput] = useState("");
+  if (!input) {
+    const input = "5";
+    setinput(input);
+  }
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make a GET request to the API endpoint
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/student/register_student_getall"
-        );
-        if (response.data && response.data.data) {
-          setData(response.data.data);
-          console.log(response.data.data);
-        }
-        // Access the data from the response object
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Make a GET request to the API endpoint
+  //       const response = await axios.get(
+  //         "http://localhost:8080/api/v1/student/getusers"
+  //       );
+  //       if (response.data && response.data.data) {
+  //         setData(response.data.data);
+  //         console.log(response.data.data);
+  //       }
+  //       // Access the data from the response object
 
-        // console.log(response.data);
+  //       // console.log(response.data);
 
-        setLoading(false);
-      } catch (error) {
-        // Handle errors
-        setError(error.message);
-        setLoading(false);
-      }
-    };
+  //       setLoading(false);
+  //     } catch (error) {
+  //       // Handle errors
+  //       setError(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    // Call the fetchData function when the component mounts
-    fetchData();
-  }, []);
+  //   // Call the fetchData function when the component mounts
+  //   fetchData();
+  // }, []);
   //console.log("data", data.data);
 
   const [formData, setFormData] = useState({
     name: "",
     date: "",
-    class: "",
+    className: "",
     in_time: "",
   });
 
@@ -131,6 +85,68 @@ function RegisterStudent() {
     console.log("Form data submitted:", formData);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  console.log("currentPage", currentPage);
+  // const itemsPerPage = "5";
+  console.log("input", input);
+  const itemsPerPage = input;
+
+  // Calculate the indexes for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handleInputChangesearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSearchTerm(event.target.value);
+  };
+  const select = async (event) => {
+    setinput(event.target.value);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Make a GET request to the API endpoint
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/student/search_students_fees_history/${id}`,
+          {
+            params: {
+              seg_id: id,
+              id: searchTerm,
+              currentPage: currentPage,
+              input: input,
+            },
+          }
+        );
+        console.log("response", response.data.data);
+        if (response.data && response.data.data) {
+          setData(response.data.data);
+
+          setTotalCount(response.data.user_count);
+          //console.log(response.data.data);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        // Handle errors
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, [currentPage, searchTerm, input]);
   return (
     <div>
       <div className="">
@@ -138,7 +154,7 @@ function RegisterStudent() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0 text-dark"> Register Students Info </h1>
+                <h1 className="m-0 text-dark">Installment fees </h1>
               </div>
 
               <div className="col-sm-6">
@@ -221,17 +237,17 @@ function RegisterStudent() {
 
                             <div className="col-lg-6">
                               <div className="form-group">
-                                <label> Class </label>
+                                <label> className </label>
                                 <input
                                   type="text"
-                                  name="class"
+                                  name="className"
                                   required
                                   className="form-control"
-                                  id="class"
+                                  id="className"
                                   aria-describedby="emailHelp"
-                                  value={formData.class}
+                                  value={formData.className}
                                   onChange={handleInputChange}
-                                  placeholder="Enter Class"
+                                  placeholder="Enter className"
                                 />
                               </div>
                               <div className="form-group">
@@ -280,6 +296,45 @@ function RegisterStudent() {
                   </div> */}
 
                   <div className="card-body">
+                    <div className="row">
+                      <div className="col-6">
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          onChange={select}
+                        >
+                          <option value="5">select</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="20">20</option>
+                        </select>
+                      </div>
+                      <div
+                        className="col-6"
+                        style={{ justifyContent: "flex-end", display: "flex" }}
+                      >
+                        <form
+                          onSubmit={handleSubmit}
+                          className="form-inline my-2 my-lg-0"
+                        >
+                          <input
+                            id="Search"
+                            value={searchTerm}
+                            onChange={handleInputChangesearch}
+                            className="form-control mr-sm-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                          <button
+                            className="btn btn-outline-primary my-2 my-sm-0"
+                            type="submit"
+                          >
+                            Search
+                          </button>
+                        </form>
+                      </div>
+                    </div>
                     <table
                       id="example1"
                       className="table table-bordered table-striped"
@@ -287,13 +342,14 @@ function RegisterStudent() {
                       <thead>
                         <tr>
                           <th>Sr No</th>
-                          <th>Students Name</th>
-                          <th>Email</th>
-                          <th>Password</th>
-                          <th>Class</th>
+                          <th>Name</th>
+
+                          <th>Total Fees</th>
+                          <th>Remaining</th>
+                          <th>Installment Fees</th>
                           <th>Date</th>
-                          <th>In Time</th>
-                          <th>Action</th>
+                          <th> Payment Type </th>
+                          <th>Description</th>
                         </tr>
                       </thead>
 
@@ -304,16 +360,31 @@ function RegisterStudent() {
                             return (
                               <tr key={index}>
                                 <td>{user.id}</td>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.password}</td>
-                                <td>{user.class_name}</td>
-                                <td>{user.date}</td>
-                                <td>{user.in_time}</td>
-                                <td>
-                                <DeleteButton recordId={user.id} onDelete={handleDelete} />
+                                <td>{user.student_name}</td>
 
+                                <td>{user.total_fees}</td>
+
+                                <td style={{ color: "red" }}>
+                                  {user.total_fees - user.installment_fees}{" "}
                                 </td>
+                                <td>{user.installment_fees}</td>
+                                <td>{user.create_date}</td>
+                                <td>{user.fees_type}</td>
+                                <td>{user.description}</td>
+
+                                {/* <td><button type="button" className="btn btn-primary" >
+                                         Edit
+                                            </button></td> */}
+                                {/* <td>
+                                  <Link
+                                    className="btn btn-primary"
+                                    to={`/Add_student_fees/${user.id}`}
+                                  >
+                                    Add
+                                  </Link>
+                                </td> */}
+
+                                {/* <td>{user.webcam}</td> */}
                               </tr>
                             );
                           })}
@@ -326,7 +397,7 @@ function RegisterStudent() {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.password}</td>
-                            <td>{user.class_name}</td>
+                            <td>{user.className_name}</td>
                           </tr>
                         );
                       }
@@ -341,13 +412,52 @@ function RegisterStudent() {
                               <td>{user.name}</td>
                               <td>{user.email}</td>
                               <td>{user.password}</td>
-                              <td>{user.class_name}</td>
+                              <td>{user.className_name}</td>
                             </tr>
                           );
                         })
                         } */}
                       </tbody>
                     </table>
+                    <ul
+                      style={{
+                        justifyContent: "flex-end",
+                      }}
+                      className="pagination"
+                    >
+                      {currentPage < Math.ceil(totalCount / itemsPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(currentPage - 1)}
+                          >
+                            Previous
+                          </button>
+                        </li>
+                      )}
+                      {Array.from({
+                        length: Math.ceil(totalCount / itemsPerPage),
+                      }).map((_, index) => (
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(index + 1)}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+                      {currentPage < Math.ceil(totalCount / itemsPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(currentPage + 1)}
+                          >
+                            Next
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                     <div
                       className="modal fade"
                       id="webcamModal"
@@ -417,7 +527,10 @@ function RegisterStudent() {
                                 >
                                   Close
                                 </button>
-                                <button type="submit1" className="btn btn-primary">
+                                <button
+                                  type="submit1"
+                                  className="btn btn-primary"
+                                >
                                   Save changes
                                 </button>
                               </div>
@@ -437,4 +550,4 @@ function RegisterStudent() {
   );
 }
 
-export default RegisterStudent;
+export default View_students_installment_history;

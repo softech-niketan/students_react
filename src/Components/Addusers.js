@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import WebcamComponent from "./WebcamComponent";
 import axios from "axios";
 
-function AddAttendance({ streamId }) {
+function Addusers({ streamId }) {
   const navigate = useNavigate();
 
   const currentTime = moment().format("HH:mm:ss");
@@ -82,20 +82,20 @@ function AddAttendance({ streamId }) {
   return (
     <>
       <div>
-        <div class="">
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Add Users </h1>
+        <div className="">
+          <div className="content-header">
+            <div className="container-fluid">
+              <div className="row mb-2">
+                <div className="col-sm-6">
+                  <h1 className="m-0 text-dark">Add Users </h1>
                 </div>
 
-                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
+                <div className="col-sm-6">
+                  <ol className="breadcrumb float-sm-right">
+                    <li className="breadcrumb-item">
                       <Link to="/viewusers">View Users</Link>
                     </li>
-                    <li class="breadcrumb-item">
+                    <li className="breadcrumb-item">
                       <Link to="/dashbord">Home</Link>
                     </li>
                   </ol>
@@ -103,49 +103,49 @@ function AddAttendance({ streamId }) {
               </div>
             </div>
           </div>
-          <div class="card-header1 " style={{ marginLeft: "15px" }}>
-            {/* <Link to="/viewusers" type="button" class="btn btn-primary">
+          <div className="card-header1 " style={{ marginLeft: "15px" }}>
+            {/* <Link to="/viewusers" type="button" className="btn btn-primary">
               {" "}
               View Users{" "}
             </Link> */}
           </div>
-          <section class="content">
+          <section className="content">
             <div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="row">
-                    <div class="col-lg-4 ml-3"></div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="row">
+                    <div className="col-lg-4 ml-3"></div>
                   </div>
 
                   <div
-                    class="modal123 fade123"
+                    className="modal123 fade123"
                     id="exampleModal"
                     tabindex="-1"
                     role="dialog"
                     aria-labelledby="exampleModalLabel1"
                     aria-hidden="true"
                   >
-                    <div class="modal-dialog1 " role="document">
-                      <div class="modal-content1">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"></h5>
-                          {/* <button type="button" class="close" data-dismiss="modal"
+                    <div className="modal-dialog1 " role="document">
+                      <div className="modal-content1">
+                        <div className="modal-header">
+                          <h5 className="modal-title" id="exampleModalLabel"></h5>
+                          {/* <button type="button" className="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button> */}
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                           <form onSubmit={handleAttendanceSubmit}>
-                            <div class="row">
-                              <div class="col-lg-6">
+                            <div className="row">
+                              <div className="col-lg-6">
                                 {/* <!-- Example single danger button --> */}
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> User Name </label>
                                   <input
                                     type="name"
                                     name="user_name"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_name"
                                     aria-describedby="emailHelp"
                                     value={formData.name}
@@ -153,13 +153,13 @@ function AddAttendance({ streamId }) {
                                     placeholder="Enter Name"
                                   />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Password </label>
                                   <input
                                     type="text"
                                     name="user_password"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_password"
                                     aria-describedby="emailHelp"
                                     value={formData.class}
@@ -167,12 +167,12 @@ function AddAttendance({ streamId }) {
                                     placeholder="Enter Class"
                                   />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label> Active/Inactive </label>
                                   <br />
                                   <select
                                     // name="status"
-                                    class="form-control"
+                                    className="form-control"
                                     id="status"
                                     value={formData.status}
                                     onChange={handleStatusChange}
@@ -184,14 +184,14 @@ function AddAttendance({ streamId }) {
                                 </div>
                               </div>
 
-                              <div class="col-lg-5">
-                                <div class="form-group">
+                              <div className="col-lg-5">
+                                <div className="form-group">
                                   <label> Email </label>
                                   <input
                                     type="text"
                                     name="email"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_password"
                                     aria-describedby="emailHelp"
                                     value={formData.class}
@@ -203,7 +203,7 @@ function AddAttendance({ streamId }) {
                                     type="hidden"
                                     name="in_time"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="in_time"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -216,7 +216,7 @@ function AddAttendance({ streamId }) {
                                     type="hidden"
                                     name="date"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="date"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -229,7 +229,7 @@ function AddAttendance({ streamId }) {
                                     type="hidden"
                                     name="total_fees"
                                     required
-                                    class="form-control"
+                                    className="form-control"
                                     id="total_fees"
                                     aria-describedby="emailHelp"
                                     // value={currentTime}
@@ -241,15 +241,15 @@ function AddAttendance({ streamId }) {
                                 </div>
                                 <div></div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                   <label for="on click url">
                                     Select Role
-                                    <span class="text-danger">*</span>
+                                    <span className="text-danger">*</span>
                                   </label>
                                   <br />
                                   <select
                                     name="user_role"
-                                    class="form-control"
+                                    className="form-control"
                                     id="user_role"
                                     value={formData.user_role}
                                     onChange={handleSelectChange}
@@ -264,8 +264,8 @@ function AddAttendance({ streamId }) {
                                 </div>
                               </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="modal-footer">
+                              <button type="submit" className="btn btn-primary">
                                 Save changes
                               </button>
                             </div>
@@ -274,11 +274,11 @@ function AddAttendance({ streamId }) {
                       </div>
                     </div>
                   </div>
-                  <div class="card123">
-                    {/* <div class="card-header">
+                  <div className="card123">
+                    {/* <div className="card-header">
                     <button
                       type="button"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -286,10 +286,10 @@ function AddAttendance({ streamId }) {
                     </button>
                   </div> */}
 
-                    <div class="card-body">
+                    <div className="card-body">
                       <table
                         id="example1"
-                        class="table table-bordered table-striped"
+                        className="table table-bordered table-striped"
                       >
                         {/* <thead>
                         <tr>
@@ -313,7 +313,7 @@ function AddAttendance({ streamId }) {
                           <td>
                               <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                              className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -330,7 +330,7 @@ function AddAttendance({ streamId }) {
                           <td>
                           <button
                               type="button"
-                              class="btn btn-warning btn-sm"
+                              className="btn btn-warning btn-sm"
                               data-toggle="modal"
                               data-target="#webcamModal"
                             >
@@ -341,39 +341,39 @@ function AddAttendance({ streamId }) {
                         </tbody>
                       </table>
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="webcamModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog " role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
+                        <div className="modal-dialog " role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title" id="exampleModalLabel">
                                 Add Attendance
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                               >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <form onSubmit={handleInputChange}>
-                                <div class="row">
-                                  <div class="col-lg-12">
+                                <div className="row">
+                                  <div className="col-lg-12">
                                     {/* <!-- Example single danger button --> */}
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Name </label>
                                       <input
                                         type="text"
                                         name="name"
-                                        class="form-control"
+                                        className="form-control"
                                         id="name"
                                         aria-describedby="emailHelp"
                                         // value={formData1.name}
@@ -382,7 +382,7 @@ function AddAttendance({ streamId }) {
                                       />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                       <label> Web cam </label>
 
                                       <WebcamComponent />
@@ -401,17 +401,17 @@ function AddAttendance({ streamId }) {
                                 <video  width={200}  height={200} ref={videoRef} autoPlay></video> */}
                                   </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div className="modal-footer">
                                   <button
                                     type="button"
-                                    class="btn btn-secondary"
+                                    className="btn btn-secondary"
                                     data-dismiss="modal"
                                   >
                                     Close
                                   </button>
                                   <button
                                     type="submit1"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                   >
                                     Save changes
                                   </button>
@@ -433,4 +433,4 @@ function AddAttendance({ streamId }) {
   );
 }
 
-export default AddAttendance;
+export default Addusers;

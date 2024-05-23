@@ -118,87 +118,87 @@ function Login(onLogin) {
 
   return (
     <>
-      <body class="hold-transition login-page" style={divStyle}>
-        <div class="login-box">
-          <div class="login-logo">
+      <body className="hold-transition login-page" style={divStyle}>
+        <div className="login-box">
+          <div className="login-logo">
             <Link href="">
               <img
                 width="200px"
                 height="200px"
                 src={logo}
-                class="mx-auto d-block rounded-circle"
+                className="mx-auto d-block rounded-circle"
                 alt=""
               />
             </Link>
           </div>
-          <div class="alert alert-danger col-12  " id="myAlert" role="alert">
+          <div className="alert alert-danger col-12  " id="myAlert" role="alert">
             Email Id Already Present!!
           </div>
-          <div class="card">
-            <div class="card-header text-center">
+          <div className="card">
+            <div className="card-header text-center">
               <h3>Students</h3>
             </div>
 
-            <div class="card-body login-card-body">
-              <h5 class=" text-center">Student Registration</h5>
+            <div className="card-body login-card-body">
+              <h5 className=" text-center">Student Registration</h5>
               <br />
 
               <form onSubmit={handleSubmit}>
-                <div class="input-group mb-3">
+                <div className="input-group mb-3">
                   <input
                     type="text"
                     required
                     name="user_name"
                     value={formData.user_name}
                     onChange={handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="Name"
                   />
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-envelope"></span>
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-envelope"></span>
                     </div>
                   </div>
                 </div>
-                <div class="input-group mb-3">
+                <div className="input-group mb-3">
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    class="form-control"
+                    className="form-control"
                     placeholder="Email"
                   />
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-envelope"></span>
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-envelope"></span>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-lg-6">
+                <div className="row">
+                  <div className="col-lg-6">
                     <input
                       type="password"
                       name="user_password"
                       value={formData.user_password}
                       onChange={handleChange}
-                      class="form-control"
+                      className="form-control"
                       placeholder="Password"
                     />
-                    <div class="input-group-append">
-                      {/* <div class="input-group-text">
-                                        <span class="fas fa-lock"></span>
+                    <div className="input-group-append">
+                      {/* <div className="input-group-text">
+                                        <span className="fas fa-lock"></span>
                                     </div> */}
                     </div>
                   </div>
-                  <div class="col-lg-6">
+                  <div className="col-lg-6">
                     <input
                       type="text"
                       required
                       name="class_name"
                       value={formData.class_name}
                       onChange={handleChange}
-                      class="form-control"
+                      className="form-control"
                       placeholder="Class"
                     />
                     <input
@@ -207,7 +207,7 @@ function Login(onLogin) {
                       name="created_date"
                       value={formData.date}
                       onChange={handleChange}
-                      class="form-control"
+                      className="form-control"
                       placeholder="Class"
                     />
                     <input
@@ -216,7 +216,7 @@ function Login(onLogin) {
                       name="created_time"
                       value={formData.in_time}
                       onChange={handleChange}
-                      class="form-control"
+                      className="form-control"
                       placeholder="Class"
                     />
                     <input
@@ -226,50 +226,50 @@ function Login(onLogin) {
                       name="total_fees"
                       value={formData.total_fees}
                       onChange={handleChange}
-                      class="form-control"
+                      className="form-control"
                       placeholder="Class"
                     />
-                    <div class="input-group-append">
-                      {/* <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
+                    <div className="input-group-append">
+                      {/* <div className="input-group-text">
+                                    <span className="fas fa-lock"></span>
                                 </div> */}
                     </div>
                   </div>
                 </div>
                 <br></br>
-                {/* <div class="input-group mb-3">
-                        <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} class="form-control" placeholder="Password"/>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                {/* <div className="input-group mb-3">
+                        <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Password"/>
+                        <div className="input-group-append">
+                            <div className="input-group-text">
+                                <span className="fas fa-lock"></span>
                             </div>
                         </div>
                       
                     </div> */}
-                <div class="row text-center">
-                  <div class="col-lg-12 text-center">
-                    <button type="submit" class="btn btn-primary btn-block">
+                <div className="row text-center">
+                  <div className="col-lg-12 text-center">
+                    <button type="submit" className="btn btn-primary btn-block">
                       Log In
                     </button>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-lg-6 "></div>
-                  <div class="col-lg-6 ">
+                <div className="row">
+                  <div className="col-lg-6 "></div>
+                  <div className="col-lg-6 ">
                     {" "}
-                    <p class="small fw-bold mt-2 pt-1 mb-0">
+                    <p className="small fw-bold mt-2 pt-1 mb-0">
                       {" "}
                       Have an account?{" "}
-                      <Link to="/" class="link-danger">
+                      <Link to="/" className="link-danger">
                         Login
                       </Link>
                     </p>
                   </div>
                 </div>
 
-                {/* <div class="login-details text-left mb-1">
-                        <div class='alert alert-danger'>
+                {/* <div className="login-details text-left mb-1">
+                        <div className='alert alert-danger'>
                       
                         </div>
                     </div> */}

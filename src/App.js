@@ -4,6 +4,8 @@ import Header from "./header";
 import Dashbord from "./Components/dashbord.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -30,9 +32,10 @@ import ViewStudentAssign from "./Components/ViewStudentAssign.js";
 import Updateusers from "./Components/Updateusers.js";
 import ViewMyAssignment from "./Components/ViewMyAssignment.js";
 import ViewUploadedassignment from "./Components/ViewUploadedassignment.js";
-import Viewstudents_fees from "./Components/Viewstudents_fees.js"
-import Add_student_fees from "./Components/Add_student_fees.js"
-import View_student_installment_fees from "./Components/View_student_installment_fees.js"
+import Viewstudents_fees from "./Components/Viewstudents_fees.js";
+import Add_student_fees from "./Components/Add_student_fees.js";
+import View_student_installment_fees from "./Components/View_student_installment_fees.js";
+import View_students_installment_history from "./Components/View_students_installment_history.js";
 
 // import React, { useState } from 'react';
 
@@ -69,9 +72,24 @@ function App() {
             <Route path="/View_batches" element={<Viewbatches />}></Route>
             <Route path="/addassignment" element={<AddAssignment />}></Route>
             <Route path="/viewassignment" element={<ViewAssignment />}></Route>
-            <Route path="/Viewstudents_fees" element={<Viewstudents_fees/>}></Route>
-            <Route path="/Add_student_fees/:id" element={<Add_student_fees/>}></Route>
-            <Route path="/View_student_installment_fees" element={<View_student_installment_fees/>}></Route>
+            <Route
+              path="/Viewstudents_fees"
+              element={<Viewstudents_fees />}
+            ></Route>
+            <Route
+              path="/Add_student_fees/:id"
+              element={<Add_student_fees />}
+            ></Route>
+            <Route
+              path="/View_student_installment_fees"
+              element={<View_student_installment_fees />}
+            ></Route>
+
+            <Route
+              path="/View_students_installment_history/:id"
+              element={<View_students_installment_history />}
+            ></Route>
+
             <Route
               path="/ViewMyAssignment"
               element={<ViewMyAssignment />}
